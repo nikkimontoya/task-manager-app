@@ -1,0 +1,30 @@
+<div class="w-screen h-screen flex justify-content-center align-items-center">
+    <div>
+        <p>Sign in or <a routerLink="/register">register</a></p>
+        <form [formGroup]="form" (submit)="submit()">
+            <div class="field">
+                <input
+                    type="text"
+                    class="inputfield p-inputtext-sm"
+                    pInputText
+                    placeholder="Username"
+                    formControlName="username"
+                />
+            </div>
+
+            <div class="field">
+                <input
+                    type="password"
+                    class="inputfield p-inputtext-sm"
+                    pInputText
+                    placeholder="Password"
+                    formControlName="password"
+                />
+            </div>
+
+            <small *ngIf="error" class="p-error field block">{{ error }}</small>
+
+            <button pButton type="submit" class="p-button-sm">Sign in</button>
+        </form>
+    </div>
+</div>
