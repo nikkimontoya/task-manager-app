@@ -1,1 +1,40 @@
-<p>register works!</p>
+<div class="w-screen h-screen flex justify-content-center align-items-center">
+    <div>
+        <p>Sign up or <a routerLink="/login">sign in</a> if you already have an account</p>
+        <form [formGroup]="form" (submit)="submit()">
+            <div class="field">
+                <input
+                    type="text"
+                    class="inputfield p-inputtext-sm"
+                    pInputText
+                    placeholder="Username"
+                    formControlName="username"
+                />
+            </div>
+
+            <div class="field">
+                <input
+                    type="email"
+                    class="inputfield p-inputtext-sm"
+                    pInputText
+                    placeholder="Email"
+                    formControlName="email"
+                />
+            </div>
+
+            <div class="field">
+                <input
+                    type="password"
+                    class="inputfield p-inputtext-sm"
+                    pInputText
+                    placeholder="Password"
+                    formControlName="password"
+                />
+            </div>
+
+            <small *ngIf="error" class="p-error field block">{{ error }}</small>
+
+            <button pButton type="submit" class="p-button-sm">Sign up</button>
+        </form>
+    </div>
+</div>
