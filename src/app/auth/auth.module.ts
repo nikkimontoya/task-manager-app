@@ -5,7 +5,8 @@ import {RouterModule, Routes} from '@angular/router';
 import {HttpClientModule} from '@angular/common/http';
 import {LoginComponent} from './components/login/login.component';
 import {ReactiveFormsModule} from '@angular/forms';
-import {PrimengModule} from '../shared/primeng/primeng.module';
+import {InputTextModule} from 'primeng/inputtext';
+import {ButtonModule} from 'primeng/button';
 
 const routes: Routes = [
     {
@@ -20,6 +21,13 @@ const routes: Routes = [
 
 @NgModule({
     declarations: [RegisterComponent, LoginComponent],
-    imports: [CommonModule, HttpClientModule, RouterModule.forChild(routes), ReactiveFormsModule, PrimengModule]
+    imports: [
+        CommonModule,
+        HttpClientModule,
+        RouterModule.forChild(routes),
+        ReactiveFormsModule,
+        InputTextModule,
+        ButtonModule
+    ]
 })
 export class AuthModule {}

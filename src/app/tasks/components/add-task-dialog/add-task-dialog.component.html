@@ -1,0 +1,44 @@
+<p-dialog header="Add a task" [(visible)]="showDialog" (onHide)="showDialogChange.emit(false)">
+    <form [formGroup]="form" (submit)="submit()">
+        <div class="field">
+            <input
+                type="text"
+                class="inputfield p-inputtext-sm w-full"
+                pInputText
+                placeholder="Title"
+                formControlName="title"
+            />
+        </div>
+
+        <div class="grid">
+            <div class="field col-6">
+                <label for="add-task-datepicker">Complete until</label>
+                <p-calendar
+                    inputId="add-task-datepicker"
+                    [showIcon]="true"
+                    dateFormat="d M yy"
+                    [minDate]="minDeadlineDate"
+                    formControlName="deadlineDate"
+                ></p-calendar>
+            </div>
+
+            <div class="field col-6">
+                <label for="add-task-executor">Executor</label>
+                <p-dropdown
+                    inputId="add-task-executor"
+                    styleClass="w-full"
+                    [options]="users"
+                    optionLabel="username"
+                    optionValue="id"
+                    formControlName="executorId"
+                ></p-dropdown>
+            </div>
+        </div>
+
+        <div class="field">
+            <textarea pInputTextarea placeholder="Body" formControlName="body" class="w-full" rows="14"></textarea>
+        </div>
+
+        <button pButton type="submit" class="p-button-sm" [disabled]="!form.valid">Save</button>
+    </form>
+</p-dialog>

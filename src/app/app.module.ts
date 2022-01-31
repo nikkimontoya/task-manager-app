@@ -4,10 +4,12 @@ import {BrowserModule} from '@angular/platform-browser';
 import {AppRoutingModule} from './app-routing.module';
 import {AppComponent} from './app.component';
 import {AuthModule} from './auth/auth.module';
+import {TasksModule} from './tasks/tasks.module';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 
 @NgModule({
     declarations: [AppComponent],
-    imports: [BrowserModule, AppRoutingModule, AuthModule],
+    imports: [BrowserModule, AppRoutingModule, AuthModule, TasksModule, BrowserAnimationsModule],
     providers: [],
     bootstrap: [AppComponent]
 })

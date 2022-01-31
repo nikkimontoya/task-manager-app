@@ -29,4 +29,8 @@ export class UserService {
             })
         );
     }
+
+    getAll(): Observable<UserInterface[]> {
+        return this.http.get<UserInterface[]>(`${environment.apiUrl}/auth/users`);
+    }
 }

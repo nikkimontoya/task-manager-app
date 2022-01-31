@@ -1,0 +1,22 @@
+<tm-add-task-dialog [(showDialog)]="showAddDialog" (taskAdded)="onTaskAdded($event)"></tm-add-task-dialog>
+
+<div class="container task-list">
+    <p-dataView [value]="tasks" [paginator]="true" [rows]="9" layout="list">
+        <ng-template pTemplate="header">
+            <button
+                pButton
+                pRipple
+                type="button"
+                icon="pi pi-plus"
+                class="p-button-rounded"
+                (click)="showAddDialog = true"
+            ></button>
+        </ng-template>
+
+        <ng-template let-task pTemplate="listItem">
+            <p-panel class="col-12 mt-3" header="{{ task.title }}">
+                <p>{{ task.body }}</p>
+            </p-panel>
+        </ng-template>
+    </p-dataView>
+</div>
