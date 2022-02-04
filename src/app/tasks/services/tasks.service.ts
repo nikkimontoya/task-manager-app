@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
-import {Observable, tap} from 'rxjs';
+import {firstValueFrom} from 'rxjs';
 import {environment} from '../../../environments/environment';
 import {TaskInterface} from '../types/task.interface';
 
@@ -8,11 +8,15 @@ import {TaskInterface} from '../types/task.interface';
 export class TasksService {
     constructor(private http: HttpClient) {}
 
-    getAll(): Observable<TaskInterface[]> {
-        return this.http.get<TaskInterface[]>(`${environment.apiUrl}/tasks`);
+    getAll(): Promise<TaskInterface[]> {
+        return firstValueFrom(this.http.get<TaskInterface[]>(`${environment.apiUrl}/tasks`));
     }
 
-    add(task: TaskInterface): Observable<any> {
-        return this.http.post(`${environment.apiUrl}/tasks`, task);
+    add(task: TaskInterface): Promise<any> {
+        return firstValueFrom(this.http.post(`${environment.apiUrl}/tasks`, task));
+    }
+
+    removeById(id: number): Promise<any> {
+        return firstValueFrom(this.http.delete(`${environment.apiUrl}/tasks/${id}`));
     }
 }

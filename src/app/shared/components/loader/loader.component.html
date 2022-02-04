@@ -1,0 +1,8 @@
+<ng-content *ngIf="!loading && !error; else notSuccessTpl"></ng-content>
+
+<ng-template #notSuccessTpl>
+    <div class="w-screen h-screen flex justify-content-center align-items-center">
+        <p-progressSpinner *ngIf="loading"></p-progressSpinner>
+        <p *ngIf="error">{{ error }}</p>
+    </div>
+</ng-template>

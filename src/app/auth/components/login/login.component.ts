@@ -2,7 +2,6 @@ import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {UserService} from '../../../shared/services/user.service';
 import {Router} from '@angular/router';
-import {HttpErrorResponse} from '@angular/common/http';
 
 @Component({
     selector: 'tm-login',
@@ -19,20 +18,18 @@ export class LoginComponent implements OnInit {
         this.initForm();
     }
 
-    submit(): void {
+    async submit(): Promise<void> {
         this.error = null;
         if (!this.form.valid) {
             return;
         }
 
-        this.userService.login(this.form.value).subscribe({
-            next: () => {
-                this.router.navigateByUrl('/');
-            },
-            error: (error: HttpErrorResponse) => {
-                this.error = error.error.message;
-            }
-        });
+        try {
+            await this.userService.login(this.form.value);
+            await this.router.navigateByUrl('/');
+        } catch (error) {
+            this.error = error.error.message;
+        }
     }
 
     private initForm(): void {

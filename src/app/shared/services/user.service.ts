@@ -3,7 +3,7 @@ import {HttpClient} from '@angular/common/http';
 import {environment} from '../../../environments/environment';
 import {LoginInterface} from '../types/login.interface';
 import {UserInterface} from '../types/user.interface';
-import {Observable, Subject, tap} from 'rxjs';
+import {firstValueFrom, Observable, Subject, tap} from 'rxjs';
 import {RegisterInterface} from '../types/register.interface';
 
 @Injectable({
@@ -22,15 +22,17 @@ export class UserService {
         );
     }
 
-    login(data: LoginInterface): Observable<UserInterface> {
-        return this.http.post<UserInterface>(`${environment.apiUrl}/auth/login`, data).pipe(
-            tap((user: UserInterface) => {
-                this.$currentUser.next(user);
-            })
+    login(data: LoginInterface): Promise<UserInterface> {
+        return firstValueFrom(
+            this.http.post<UserInterface>(`${environment.apiUrl}/auth/login`, data).pipe(
+                tap((user: UserInterface) => {
+                    this.$currentUser.next(user);
+                })
+            )
         );
     }
 
-    getAll(): Observable<UserInterface[]> {
-        return this.http.get<UserInterface[]>(`${environment.apiUrl}/auth/users`);
+    getAll(): Promise<UserInterface[]> {
+        return firstValueFrom(this.http.get<UserInterface[]>(`${environment.apiUrl}/auth/users`));
     }
 }

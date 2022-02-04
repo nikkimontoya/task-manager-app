@@ -1,22 +1,33 @@
 <tm-add-task-dialog [(showDialog)]="showAddDialog" (taskAdded)="onTaskAdded($event)"></tm-add-task-dialog>
+<p-confirmPopup></p-confirmPopup>
 
-<div class="container task-list">
-    <p-dataView [value]="tasks" [paginator]="true" [rows]="9" layout="list">
-        <ng-template pTemplate="header">
-            <button
-                pButton
-                pRipple
-                type="button"
-                icon="pi pi-plus"
-                class="p-button-rounded"
-                (click)="showAddDialog = true"
-            ></button>
-        </ng-template>
+<tm-loader [loading]="loading" [error]="error">
+    <div class="container task-list">
+        <p-dataView [value]="tasks" [paginator]="true" [rows]="9" layout="list">
+            <ng-template pTemplate="header">
+                <button
+                    pButton
+                    pRipple
+                    type="button"
+                    icon="pi pi-plus"
+                    class="p-button-rounded"
+                    (click)="showAddDialog = true"
+                ></button>
+            </ng-template>
 
-        <ng-template let-task pTemplate="listItem">
-            <p-panel class="col-12 mt-3" header="{{ task.title }}">
-                <p>{{ task.body }}</p>
-            </p-panel>
-        </ng-template>
-    </p-dataView>
-</div>
+            <ng-template let-task pTemplate="listItem">
+                <p-panel class="col-12 mt-3" header="{{ task.title }}">
+                    <ng-template pTemplate="icons">
+                        <button class="p-panel-header-icon p-link">
+                            <span class="pi pi-pencil"></span>
+                        </button>
+                        <button class="p-panel-header-icon p-link" (click)="removeTask($event, task.id)">
+                            <span class="pi pi-trash"></span>
+                        </button>
+                    </ng-template>
+                    <p>{{ task.body }}</p>
+                </p-panel>
+            </ng-template>
+        </p-dataView>
+    </div>
+</tm-loader>

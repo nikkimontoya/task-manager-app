@@ -13,6 +13,8 @@ import {InputTextareaModule} from 'primeng/inputtextarea';
 import {ReactiveFormsModule} from '@angular/forms';
 import {CalendarModule} from 'primeng/calendar';
 import {DropdownModule} from 'primeng/dropdown';
+import {SharedModule} from '../shared/shared.module';
+import {ConfirmPopupModule} from 'primeng/confirmpopup';
 
 @NgModule({
     declarations: [TaskListComponent, AddTaskDialogComponent],
@@ -27,7 +29,9 @@ import {DropdownModule} from 'primeng/dropdown';
         InputTextModule,
         InputTextareaModule,
         CalendarModule,
-        DropdownModule
+        DropdownModule,
+        SharedModule,
+        ConfirmPopupModule
     ],
     providers: [TasksService]
 })
