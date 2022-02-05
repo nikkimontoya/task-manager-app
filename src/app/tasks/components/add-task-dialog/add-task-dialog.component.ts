@@ -43,7 +43,11 @@ export class AddTaskDialogComponent implements OnInit {
         }
 
         try {
-            const task = await this.tasksService.add({...this.form.value, authorId: 1});
+            const task = await this.tasksService.add({
+                ...this.form.value,
+                authorId: this.userService.getCurrentUser().id
+            });
+
             this.taskAdded.emit(task);
             this.showDialogChange.emit(false);
             this.form.reset();

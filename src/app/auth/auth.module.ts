@@ -7,6 +7,7 @@ import {LoginComponent} from './components/login/login.component';
 import {ReactiveFormsModule} from '@angular/forms';
 import {InputTextModule} from 'primeng/inputtext';
 import {ButtonModule} from 'primeng/button';
+import {SharedModule} from '../shared/shared.module';
 
 const routes: Routes = [
     {
@@ -27,7 +28,8 @@ const routes: Routes = [
         RouterModule.forChild(routes),
         ReactiveFormsModule,
         InputTextModule,
-        ButtonModule
+        ButtonModule,
+        SharedModule
     ]
 })
 export class AuthModule {}
