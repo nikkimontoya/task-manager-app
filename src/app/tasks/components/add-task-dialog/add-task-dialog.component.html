@@ -1,4 +1,9 @@
-<p-dialog header="Add a task" [(visible)]="showDialog" (onHide)="showDialogChange.emit(false)">
+<p-dialog
+    [header]="task ? 'Edit the task' : 'Add a task'"
+    [(visible)]="showDialog"
+    (onHide)="showDialogChange.emit(false)"
+    [modal]="true"
+>
     <form [formGroup]="form" (submit)="submit()">
         <div class="field">
             <input
@@ -12,7 +17,7 @@
 
         <div class="grid">
             <div class="field col-6">
-                <label for="add-task-datepicker">Complete until</label>
+                <label class="block" for="add-task-datepicker">Complete until</label>
                 <p-calendar
                     inputId="add-task-datepicker"
                     [showIcon]="true"

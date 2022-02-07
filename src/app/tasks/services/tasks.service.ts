@@ -16,6 +16,10 @@ export class TasksService {
         return firstValueFrom(this.http.post(`${environment.apiUrl}/tasks`, task));
     }
 
+    editById(id: number, task: TaskInterface): Promise<any> {
+        return firstValueFrom(this.http.put(`${environment.apiUrl}/tasks/${id}`, task));
+    }
+
     removeById(id: number): Promise<any> {
         return firstValueFrom(this.http.delete(`${environment.apiUrl}/tasks/${id}`));
     }

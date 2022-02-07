@@ -14,6 +14,7 @@ export class TaskListComponent implements OnInit {
     showAddDialog = false;
     loading = false;
     error: string = null;
+    editingTask: TaskInterface | null = null;
 
     constructor(private tasksService: TasksService, private confirmationService: ConfirmationService) {}
 
@@ -32,6 +33,10 @@ export class TaskListComponent implements OnInit {
         this.tasks = [task, ...this.tasks];
     }
 
+    onTaskEdited(task: TaskInterface) {
+        this.tasks = [task, ...this.tasks.filter((t) => t.id !== task.id)];
+    }
+
     removeTask(event, id: number) {
         this.confirmationService.confirm({
             target: event.target,
@@ -41,5 +46,10 @@ export class TaskListComponent implements OnInit {
                 this.tasks = this.tasks.filter((task) => task.id !== id);
             }
         });
+    }
+
+    openTaskDialog(task: TaskInterface | null): void {
+        this.editingTask = task;
+        this.showAddDialog = true;
     }
 }
