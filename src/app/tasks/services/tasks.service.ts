@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
-import {firstValueFrom} from 'rxjs';
+import {Observable} from 'rxjs';
 import {environment} from '../../../environments/environment';
 import {TaskInterface} from '../types/task.interface';
 
@@ -8,19 +8,19 @@ import {TaskInterface} from '../types/task.interface';
 export class TasksService {
     constructor(private http: HttpClient) {}
 
-    getAll(): Promise<TaskInterface[]> {
-        return firstValueFrom(this.http.get<TaskInterface[]>(`${environment.apiUrl}/tasks`));
+    getAll(): Observable<TaskInterface[]> {
+        return this.http.get<TaskInterface[]>(`${environment.apiUrl}/tasks`);
     }
 
-    add(task: TaskInterface): Promise<any> {
-        return firstValueFrom(this.http.post(`${environment.apiUrl}/tasks`, task));
+    add(task: TaskInterface): Observable<TaskInterface> {
+        return this.http.post<TaskInterface>(`${environment.apiUrl}/tasks`, task);
     }
 
-    editById(id: number, task: TaskInterface): Promise<any> {
-        return firstValueFrom(this.http.put(`${environment.apiUrl}/tasks/${id}`, task));
+    editById(id: number, task: TaskInterface): Observable<TaskInterface> {
+        return this.http.put<TaskInterface>(`${environment.apiUrl}/tasks/${id}`, task);
     }
 
-    removeById(id: number): Promise<any> {
-        return firstValueFrom(this.http.delete(`${environment.apiUrl}/tasks/${id}`));
+    removeById(id: number): Observable<any> {
+        return this.http.delete(`${environment.apiUrl}/tasks/${id}`);
     }
 }

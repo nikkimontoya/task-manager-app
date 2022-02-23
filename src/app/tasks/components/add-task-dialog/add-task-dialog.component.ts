@@ -2,16 +2,18 @@ import {Component, EventEmitter, Input, OnChanges, OnDestroy, OnInit, Output, Si
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {TasksService} from '../../services/tasks.service';
 import {TaskInterface} from '../../types/task.interface';
-import {Subscription, switchMap} from 'rxjs';
+import {Subscription} from 'rxjs';
 import {UserService} from '../../../shared/services/user.service';
 import {UserInterface} from '../../../shared/types/user.interface';
+import {HttpRequestState, httpRequestStates} from 'ngx-http-request-state';
+import {MessagesService} from '../../../shared/services/messages.service';
 
 @Component({
     selector: 'tm-add-task-dialog',
     templateUrl: './add-task-dialog.component.html',
     styleUrls: ['./add-task-dialog.component.scss']
 })
-export class AddTaskDialogComponent implements OnInit, OnChanges {
+export class AddTaskDialogComponent implements OnInit, OnChanges, OnDestroy {
     @Input() showDialog = false;
     @Input() task: TaskInterface | null = null;
 
@@ -22,8 +24,14 @@ export class AddTaskDialogComponent implements OnInit, OnChanges {
     form: FormGroup;
     minDeadlineDate: Date;
     users: UserInterface[];
+    subscriptions: Subscription[] = [];
 
-    constructor(private fb: FormBuilder, private tasksService: TasksService, public userService: UserService) {}
+    constructor(
+        private fb: FormBuilder,
+        private tasksService: TasksService,
+        public userService: UserService,
+        private messagesService: MessagesService
+    ) {}
 
     ngOnChanges(changes: SimpleChanges): void {
         if (changes.task) {
@@ -31,25 +39,38 @@ export class AddTaskDialogComponent implements OnInit, OnChanges {
         }
     }
 
-    async ngOnInit() {
-        this.users = await this.userService.getAll();
+    ngOnInit(): void {
+        const sub = this.userService
+            .getAll()
+            .pipe(httpRequestStates())
+            .subscribe((requestState: HttpRequestState<UserInterface[]>) => {
+                if (!requestState.isLoading && requestState.error) {
+                    this.users = requestState.value;
+                } else if (requestState.error) {
+                    this.messagesService.showError();
+                }
+            });
+
+        this.subscriptions.push(sub);
     }
 
-    async submit() {
+    ngOnDestroy(): void {
+        this.subscriptions.forEach((sub) => sub.unsubscribe());
+    }
+
+    submit(): void {
         if (!this.form.valid) {
             return;
         }
 
-        try {
-            if (this.task) {
-                await this.editTask();
-            } else {
-                await this.addTask();
-            }
+        if (this.task) {
+            this.editTask();
+        } else {
+            this.addTask();
+        }
 
-            this.showDialogChange.emit(false);
-            this.form.reset();
-        } catch (error) {}
+        this.showDialogChange.emit(false);
+        this.form.reset();
     }
 
     private initForm(): void {
@@ -65,21 +86,39 @@ export class AddTaskDialogComponent implements OnInit, OnChanges {
         });
     }
 
-    private async addTask(): Promise<void> {
-        const task = await this.tasksService.add({
-            ...this.form.value,
-            authorId: this.userService.getCurrentUser().id
-        });
+    private addTask(): void {
+        const sub = this.tasksService
+            .add({
+                ...this.form.value,
+                authorId: this.userService.getCurrentUser().id
+            })
+            .pipe(httpRequestStates())
+            .subscribe((requestState: HttpRequestState<TaskInterface>) => {
+                if (!requestState.isLoading && !requestState.error) {
+                    this.taskAdded.emit(requestState.value);
+                } else if (requestState.error) {
+                    this.messagesService.showError();
+                }
+            });
 
-        this.taskAdded.emit(task);
+        this.subscriptions.push(sub);
     }
 
-    private async editTask(): Promise<void> {
-        const task = await this.tasksService.editById(this.task.id, {
-            ...this.form.value,
-            authorId: this.userService.getCurrentUser().id
-        });
+    private editTask(): void {
+        const sub = this.tasksService
+            .editById(this.task.id, {
+                ...this.form.value,
+                authorId: this.userService.getCurrentUser().id
+            })
+            .pipe(httpRequestStates())
+            .subscribe((requestState: HttpRequestState<TaskInterface>) => {
+                if (!requestState.isLoading && requestState.error) {
+                    this.taskEdited.emit(requestState.value);
+                } else if (requestState.error) {
+                    this.messagesService.showError();
+                }
+            });
 
-        this.taskEdited.emit(task);
+        this.subscriptions.push(sub);
     }
 }

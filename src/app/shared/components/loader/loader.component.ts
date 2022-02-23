@@ -1,20 +1,11 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, Input} from '@angular/core';
 
 @Component({
     selector: 'tm-loader',
     templateUrl: './loader.component.html',
     styleUrls: ['./loader.component.scss']
 })
-export class LoaderComponent implements OnInit {
+export class LoaderComponent {
     @Input() loading: boolean = false;
     @Input() error: string = null;
-
-    constructor() {}
-
-    ngOnInit(): void {}
-
-    ngOnChanges() {
-        console.log('loading: ', this.loading);
-        console.log('error: ', this.error);
-    }
 }

@@ -1,35 +1,52 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {UserService} from '../../../shared/services/user.service';
 import {Router} from '@angular/router';
+import {MessagesService} from '../../../shared/services/messages.service';
+import {HttpRequestState, httpRequestStates} from 'ngx-http-request-state';
+import {Subscription} from 'rxjs';
 
 @Component({
     selector: 'tm-login',
     templateUrl: './login.component.html',
     styleUrls: ['./login.component.scss']
 })
-export class LoginComponent implements OnInit {
+export class LoginComponent implements OnInit, OnDestroy {
     form: FormGroup;
-    error: string;
+    subscriptions: Subscription[] = [];
 
-    constructor(private fb: FormBuilder, private userService: UserService, private router: Router) {}
+    constructor(
+        private fb: FormBuilder,
+        private userService: UserService,
+        private router: Router,
+        private messagesService: MessagesService
+    ) {}
 
     ngOnInit(): void {
         this.initForm();
     }
 
-    async submit(): Promise<void> {
-        this.error = null;
+    ngOnDestroy(): void {
+        this.subscriptions.forEach((sub) => sub.unsubscribe());
+    }
+
+    submit(): void {
         if (!this.form.valid) {
             return;
         }
 
-        try {
-            await this.userService.login(this.form.value);
-            await this.router.navigateByUrl('/');
-        } catch (error) {
-            this.error = error.error.message;
-        }
+        const sub = this.userService
+            .login(this.form.value)
+            .pipe(httpRequestStates())
+            .subscribe((requestState: HttpRequestState<any>) => {
+                if (!requestState.isLoading && !requestState.error) {
+                    this.router.navigateByUrl('/');
+                } else if (requestState.error) {
+                    this.messagesService.showError();
+                }
+            });
+
+        this.subscriptions.push(sub);
     }
 
     private initForm(): void {
