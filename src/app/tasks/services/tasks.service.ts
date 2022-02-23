@@ -1,15 +1,18 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
-import {Observable} from 'rxjs';
+import {map, Observable} from 'rxjs';
 import {environment} from '../../../environments/environment';
 import {TaskInterface} from '../types/task.interface';
+import {UserInterface} from '../../shared/types/user.interface';
 
 @Injectable()
 export class TasksService {
     constructor(private http: HttpClient) {}
 
     getAll(): Observable<TaskInterface[]> {
-        return this.http.get<TaskInterface[]>(`${environment.apiUrl}/tasks`);
+        return this.http
+            .get<{data: TaskInterface[]; included: {users: UserInterface[]}}>(`${environment.apiUrl}/tasks`)
+            .pipe(map((response) => this.processTasks(response)));
     }
 
     add(task: TaskInterface): Observable<TaskInterface> {
@@ -22,5 +25,14 @@ export class TasksService {
 
     removeById(id: number): Observable<any> {
         return this.http.delete(`${environment.apiUrl}/tasks/${id}`);
+    }
+
+    private processTasks(data: {data: TaskInterface[]; included: {users: UserInterface[]}}): TaskInterface[] {
+        return data.data.map((task: TaskInterface) => {
+            const author = data.included.users.find((user: UserInterface) => user.id === task.authorId);
+            const executor = data.included.users.find((user: UserInterface) => user.id === task.executorId);
+
+            return {...task, author, executor};
+        });
     }
 }
