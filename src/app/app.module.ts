@@ -10,6 +10,7 @@ import {HTTP_INTERCEPTORS} from '@angular/common/http';
 import {AuthInterceptor} from './shared/interceptors/auth.interceptor';
 import {ToastModule} from 'primeng/toast';
 import {MessageService} from 'primeng/api';
+import {SharedModule} from './shared/shared.module';
 
 const INTERCEPTOR_PROVIDER: Provider = {
     provide: HTTP_INTERCEPTORS,
@@ -19,7 +20,15 @@ const INTERCEPTOR_PROVIDER: Provider = {
 
 @NgModule({
     declarations: [AppComponent],
-    imports: [BrowserModule, AppRoutingModule, AuthModule, TasksModule, BrowserAnimationsModule, ToastModule],
+    imports: [
+        BrowserModule,
+        AppRoutingModule,
+        AuthModule,
+        TasksModule,
+        BrowserAnimationsModule,
+        ToastModule,
+        SharedModule
+    ],
     providers: [INTERCEPTOR_PROVIDER, MessageService],
     bootstrap: [AppComponent]
 })

@@ -15,6 +15,16 @@ export class TasksService {
             .pipe(map((response) => this.processTasks(response)));
     }
 
+    getById(id: number): Observable<TaskInterface> {
+        return this.http
+            .get<{data: TaskInterface; included: {users: UserInterface[]}}>(`${environment.apiUrl}/tasks/${id}`)
+            .pipe(
+                map((response) => ({...response, data: [response.data]})),
+                map((response) => this.processTasks(response)),
+                map((response) => response[0])
+            );
+    }
+
     add(task: TaskInterface): Observable<TaskInterface> {
         return this.http.post<TaskInterface>(`${environment.apiUrl}/tasks`, task);
     }

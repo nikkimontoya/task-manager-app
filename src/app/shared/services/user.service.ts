@@ -6,12 +6,13 @@ import {UserInterface} from '../types/user.interface';
 import {Observable, tap} from 'rxjs';
 import {RegisterInterface} from '../types/register.interface';
 import {StorageService} from './storage.service';
+import {Router} from '@angular/router';
 
 const USER_STORAGE_KEY = 'currentUser';
 
 @Injectable()
 export class UserService {
-    constructor(private http: HttpClient, private storage: StorageService) {}
+    constructor(private http: HttpClient, private storage: StorageService, private router: Router) {}
 
     register(data: RegisterInterface) {
         return this.http.post<UserInterface>(`${environment.apiUrl}/auth/register`, data).pipe(
@@ -27,6 +28,11 @@ export class UserService {
                 this.setCurrentUser(user);
             })
         );
+    }
+
+    logout() {
+        this.storage.removeItem(USER_STORAGE_KEY);
+        this.router.navigateByUrl('/login');
     }
 
     getAll(): Observable<UserInterface[]> {

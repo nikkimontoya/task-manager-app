@@ -15,9 +15,16 @@ import {CalendarModule} from 'primeng/calendar';
 import {DropdownModule} from 'primeng/dropdown';
 import {SharedModule} from '../shared/shared.module';
 import {ConfirmPopupModule} from 'primeng/confirmpopup';
+import {TaskComponent} from './components/task/task.component';
+import {CardModule} from 'primeng/card';
+import {TaskPageComponent} from './components/task-page/task-page.component';
+import {RippleModule} from 'primeng/ripple';
+import {TableModule} from 'primeng/table';
+import {RouterModule} from '@angular/router';
+import {MenuModule} from 'primeng/menu';
 
 @NgModule({
-    declarations: [TaskListComponent, AddTaskDialogComponent],
+    declarations: [TaskListComponent, AddTaskDialogComponent, TaskComponent, TaskPageComponent],
     imports: [
         CommonModule,
         ReactiveFormsModule,
@@ -31,7 +38,12 @@ import {ConfirmPopupModule} from 'primeng/confirmpopup';
         CalendarModule,
         DropdownModule,
         SharedModule,
-        ConfirmPopupModule
+        ConfirmPopupModule,
+        CardModule,
+        RippleModule,
+        TableModule,
+        RouterModule,
+        MenuModule
     ],
     providers: [TasksService]
 })

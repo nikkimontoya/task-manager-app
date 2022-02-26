@@ -1,0 +1,11 @@
+<p-card [header]="task.title">
+    <ng-template pTemplate="subtitle">
+        Created by {{ task.author.username }} at <strong>{{ task.createdAt | date }}</strong>
+        <br />
+        Assigned to {{ task.executor.username }}
+        <br />
+        Complete until <strong>{{ task.deadlineDate | date }}</strong>
+    </ng-template>
+
+    {{ task.body }}
+</p-card>

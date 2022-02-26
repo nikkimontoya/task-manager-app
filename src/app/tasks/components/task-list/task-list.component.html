@@ -7,10 +7,10 @@
 
 <p-confirmPopup></p-confirmPopup>
 
-<tm-loader [loading]="loading" [error]="error">
-    <div class="container task-list">
-        <p-dataView [value]="tasks" [paginator]="true" [rows]="9" layout="list">
-            <ng-template pTemplate="header">
+<div class="container task-list">
+    <p-card>
+        <p-table [value]="tasks" [loading]="loading" dataKey="id">
+            <ng-template pTemplate="caption">
                 <button
                     pButton
                     pRipple
@@ -20,22 +20,62 @@
                     (click)="openTaskDialog(null)"
                 ></button>
             </ng-template>
-
-            <ng-template let-task pTemplate="listItem">
-                <p-panel class="col-12 mt-3" header="{{ task.title }}">
-                    <ng-template pTemplate="icons">
-                        <button class="p-panel-header-icon p-link" (click)="openTaskDialog(task)">
+            <ng-template pTemplate="header">
+                <tr>
+                    <th style="width: 3rem"></th>
+                    <th>Title</th>
+                    <th>Assigned to</th>
+                    <th>Created by</th>
+                    <th>Created at</th>
+                    <th>Deadline</th>
+                    <th></th>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-task let-expanded="expanded">
+                <tr>
+                    <td>
+                        <button
+                            type="button"
+                            pButton
+                            pRipple
+                            [pRowToggler]="task"
+                            class="p-button-text p-button-rounded p-button-plain"
+                            [icon]="expanded ? 'pi pi-chevron-down' : 'pi pi-chevron-right'"
+                        ></button>
+                    </td>
+                    <td>
+                        <a [routerLink]="['/tasks', task.id]">{{ task.title }}</a>
+                    </td>
+                    <td>{{ task.executor.username }}</td>
+                    <td>{{ task.author.username }}</td>
+                    <td>{{ task.createdAt | date }}</td>
+                    <td>{{ task.deadlineDate | date }}</td>
+                    <td>
+                        <button
+                            class="p-panel-header-icon p-link ml-2 mr-2"
+                            title="Edit"
+                            (click)="openTaskDialog(task)"
+                        >
                             <span class="pi pi-pencil"></span>
                         </button>
 
-                        <button class="p-panel-header-icon p-link" (click)="removeTask($event, task.id)">
+                        <button
+                            class="p-panel-header-icon p-link ml-2 mr-2"
+                            title="Delete"
+                            (click)="removeTask($event, task.id)"
+                        >
                             <span class="pi pi-trash"></span>
                         </button>
-                    </ng-template>
-
-                    <p>{{ task.body }}</p>
-                </p-panel>
+                    </td>
+                </tr>
             </ng-template>
-        </p-dataView>
-    </div>
-</tm-loader>
+            <ng-template pTemplate="rowexpansion" let-task>
+                <tr>
+                    <td colspan="7">
+                        <p>{{ task.body }}</p>
+                    </td>
+                </tr>
+            </ng-template>
+        </p-table>
+    </p-card>
+</div>

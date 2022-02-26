@@ -9,4 +9,5 @@ export interface TaskInterface {
     deadlineDate: Date;
     author?: UserInterface;
     executor?: UserInterface;
+    createdAt: Date;
 }
