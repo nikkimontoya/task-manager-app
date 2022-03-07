@@ -44,7 +44,7 @@ export class AddTaskDialogComponent implements OnInit, OnChanges, OnDestroy {
             .getAll()
             .pipe(httpRequestStates())
             .subscribe((requestState: HttpRequestState<UserInterface[]>) => {
-                if (!requestState.isLoading && requestState.error) {
+                if (!requestState.isLoading && !requestState.error) {
                     this.users = requestState.value;
                 } else if (requestState.error) {
                     this.messagesService.showError();
@@ -112,7 +112,7 @@ export class AddTaskDialogComponent implements OnInit, OnChanges, OnDestroy {
             })
             .pipe(httpRequestStates())
             .subscribe((requestState: HttpRequestState<TaskInterface>) => {
-                if (!requestState.isLoading && requestState.error) {
+                if (!requestState.isLoading && !requestState.error) {
                     this.taskEdited.emit(requestState.value);
                 } else if (requestState.error) {
                     this.messagesService.showError();
