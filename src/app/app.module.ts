@@ -11,6 +11,7 @@ import {AuthInterceptor} from './shared/interceptors/auth.interceptor';
 import {ToastModule} from 'primeng/toast';
 import {MessageService} from 'primeng/api';
 import {SharedModule} from './shared/shared.module';
+import {ProjectsModule} from './projects/projects.module';
 
 const INTERCEPTOR_PROVIDER: Provider = {
     provide: HTTP_INTERCEPTORS,
@@ -27,7 +28,8 @@ const INTERCEPTOR_PROVIDER: Provider = {
         TasksModule,
         BrowserAnimationsModule,
         ToastModule,
-        SharedModule
+        SharedModule,
+        ProjectsModule
     ],
     providers: [INTERCEPTOR_PROVIDER, MessageService],
     bootstrap: [AppComponent]

@@ -46,8 +46,8 @@
                     <td>
                         <a [routerLink]="['/tasks', task.id]">{{ task.title }}</a>
                     </td>
-                    <td>{{ task.executor.username }}</td>
-                    <td>{{ task.author.username }}</td>
+                    <td>{{ task.executor.firstName + ' ' + task.executor.lastName }}</td>
+                    <td>{{ task.author.firstName + ' ' + task.author.lastName }}</td>
                     <td>{{ task.createdAt | date }}</td>
                     <td>{{ task.deadlineDate | date }}</td>
                     <td>

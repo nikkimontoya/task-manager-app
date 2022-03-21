@@ -1,0 +1,39 @@
+.item {
+    background: white;
+    width: 250px;
+    height: 250px;
+    box-shadow: 0 2px 1px -1px rgba(0, 0, 0, 0.2), 0 1px 1px 0 rgba(0, 0, 0, 0.14), 0 1px 3px 0 rgba(0, 0, 0, 0.12);
+    border-radius: 4px;
+    position: relative;
+    padding: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--surface-600);
+
+    &:before {
+        content: '';
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        background: black;
+        opacity: 0;
+        pointer-events: none;
+        transition: 0.3s;
+        border-radius: 4px;
+    }
+
+    &:hover {
+        &:before {
+            opacity: 0.3;
+            pointer-events: auto;
+            cursor: pointer;
+        }
+    }
+}
+
+.projects-container {
+    gap: 24px;
+}

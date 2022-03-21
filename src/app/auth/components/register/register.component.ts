@@ -1,10 +1,12 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
-import {FormBuilder, FormGroup, Validators} from '@angular/forms';
-import {UserService} from '../../../shared/services/user.service';
 import {Router} from '@angular/router';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+
 import {HttpRequestState, httpRequestStates} from 'ngx-http-request-state';
-import {MessagesService} from '../../../shared/services/messages.service';
 import {Subscription} from 'rxjs';
+
+import {UserService} from '../../../shared/services/user.service';
+import {MessagesService} from '../../../shared/services/messages.service';
 
 @Component({
     selector: 'tm-register',
@@ -30,15 +32,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
         this.subscriptions.forEach((sub) => sub.unsubscribe());
     }
 
-    private initForm(): void {
-        this.form = this.fb.group({
-            username: ['', Validators.required],
-            email: ['', [Validators.required, Validators.email]],
-            password: ['', Validators.required]
-        });
-    }
-
-    submit() {
+    submit(): void {
         if (!this.form.valid) {
             return;
         }
@@ -55,5 +49,14 @@ export class RegisterComponent implements OnInit, OnDestroy {
             });
 
         this.subscriptions.push(sub);
+    }
+
+    private initForm(): void {
+        this.form = this.fb.group({
+            firstName: ['', Validators.required],
+            lastName: ['', Validators.required],
+            email: ['', [Validators.required, Validators.email]],
+            password: ['', Validators.required]
+        });
     }
 }
