@@ -15,6 +15,10 @@ export class TopMenuComponent implements OnInit {
     ngOnInit(): void {
         this.items = [
             {
+                label: 'Projects',
+                routerLink: ['/projects']
+            },
+            {
                 label: 'Tasks',
                 routerLink: ['/tasks']
             }
