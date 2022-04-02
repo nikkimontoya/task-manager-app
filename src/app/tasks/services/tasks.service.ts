@@ -4,6 +4,9 @@ import {map, Observable} from 'rxjs';
 import {environment} from '../../../environments/environment';
 import {TaskInterface} from '../types/task.interface';
 import {UserInterface} from '../../shared/types/user.interface';
+import {ProjectInterface} from '../../projects/types/project.interface';
+import {TaskDto} from '../dto/task.dto';
+import {TasksDto} from '../dto/tasks.dto';
 
 @Injectable()
 export class TasksService {
@@ -11,18 +14,16 @@ export class TasksService {
 
     getAll(): Observable<TaskInterface[]> {
         return this.http
-            .get<{data: TaskInterface[]; included: {users: UserInterface[]}}>(`${environment.apiUrl}/tasks`)
+            .get<TasksDto>(`${environment.apiUrl}/tasks`)
             .pipe(map((response) => this.processTasks(response)));
     }
 
     getById(id: number): Observable<TaskInterface> {
-        return this.http
-            .get<{data: TaskInterface; included: {users: UserInterface[]}}>(`${environment.apiUrl}/tasks/${id}`)
-            .pipe(
-                map((response) => ({...response, data: [response.data]})),
-                map((response) => this.processTasks(response)),
-                map((response) => response[0])
-            );
+        return this.http.get<TaskDto>(`${environment.apiUrl}/tasks/${id}`).pipe(
+            map((response) => ({...response, data: [response.data]})),
+            map((response) => this.processTasks(response)),
+            map((response) => response[0])
+        );
     }
 
     add(task: TaskInterface): Observable<TaskInterface> {
@@ -37,12 +38,13 @@ export class TasksService {
         return this.http.delete(`${environment.apiUrl}/tasks/${id}`);
     }
 
-    private processTasks(data: {data: TaskInterface[]; included: {users: UserInterface[]}}): TaskInterface[] {
+    private processTasks(data: TasksDto): TaskInterface[] {
         return data.data.map((task: TaskInterface) => {
             const author = data.included.users.find((user: UserInterface) => user.id === task.authorId);
             const executor = data.included.users.find((user: UserInterface) => user.id === task.executorId);
+            const project = data.included.projects.find((project: ProjectInterface) => (project.id = task.projectId));
 
-            return {...task, author, executor};
+            return {...task, author, executor, project};
         });
     }
 }

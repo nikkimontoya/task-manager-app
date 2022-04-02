@@ -26,6 +26,7 @@
                     <th>Title</th>
                     <th>Assigned to</th>
                     <th>Created by</th>
+                    <th>Project</th>
                     <th>Created at</th>
                     <th>Deadline</th>
                     <th></th>
@@ -48,6 +49,9 @@
                     </td>
                     <td>{{ task.executor.firstName + ' ' + task.executor.lastName }}</td>
                     <td>{{ task.author.firstName + ' ' + task.author.lastName }}</td>
+                    <td>
+                        <a [routerLink]="['/projects', task.project.id]">{{ task.project.name }}</a>
+                    </td>
                     <td>{{ task.createdAt | date }}</td>
                     <td>{{ task.deadlineDate | date }}</td>
                     <td>
@@ -71,7 +75,7 @@
             </ng-template>
             <ng-template pTemplate="rowexpansion" let-task>
                 <tr>
-                    <td colspan="7">
+                    <td colspan="8">
                         <p>{{ task.body }}</p>
                     </td>
                 </tr>
