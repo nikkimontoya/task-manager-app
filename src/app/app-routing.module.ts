@@ -3,6 +3,7 @@ import {RouterModule, Routes} from '@angular/router';
 import {TaskListComponent} from './tasks/components/task-list/task-list.component';
 import {AuthGuard} from './auth/guards/auth.guard';
 import {TaskPageComponent} from './tasks/components/task-page/task-page.component';
+import TaskResolver from './tasks/services/task.resolver';
 
 const routes: Routes = [
     {
@@ -17,7 +18,10 @@ const routes: Routes = [
     },
     {
         path: 'tasks/:id',
-        component: TaskPageComponent
+        component: TaskPageComponent,
+        resolve: {
+            task: TaskResolver
+        }
     },
     {
         path: 'projects',

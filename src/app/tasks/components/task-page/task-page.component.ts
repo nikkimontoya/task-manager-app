@@ -16,20 +16,10 @@ export class TaskPageComponent implements OnInit, OnDestroy {
     error: string = null;
     subscriptions: Subscription[] = [];
 
-    constructor(private activatedRoute: ActivatedRoute, private tasksService: TasksService) {}
+    constructor(public activatedRoute: ActivatedRoute) {}
 
     ngOnInit(): void {
-        const sub = this.activatedRoute.params
-            .pipe(
-                switchMap((params) => this.tasksService.getById(params.id)),
-                httpRequestStates()
-            )
-            .subscribe((requestState: HttpRequestState<TaskInterface>) => {
-                this.task = requestState.value;
-                this.loading = requestState.isLoading;
-                this.error = requestState.error?.message || '';
-            });
-
+        const sub = this.activatedRoute.data.subscribe((data) => (this.task = data.task));
         this.subscriptions.push(sub);
     }
 
