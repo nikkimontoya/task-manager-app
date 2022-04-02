@@ -2,11 +2,13 @@ import {Component, EventEmitter, Input, OnChanges, OnDestroy, OnInit, Output, Si
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {TasksService} from '../../services/tasks.service';
 import {TaskInterface} from '../../types/task.interface';
-import {Subscription} from 'rxjs';
+import {combineLatest, Subscription} from 'rxjs';
 import {UserService} from '../../../shared/services/user.service';
 import {UserInterface} from '../../../shared/types/user.interface';
 import {HttpRequestState, httpRequestStates} from 'ngx-http-request-state';
 import {MessagesService} from '../../../shared/services/messages.service';
+import {ProjectsService} from '../../../projects/services/projects.service';
+import {ProjectInterface} from '../../../projects/types/project.interface';
 
 @Component({
     selector: 'tm-add-task-dialog',
@@ -24,13 +26,15 @@ export class AddTaskDialogComponent implements OnInit, OnChanges, OnDestroy {
     form: FormGroup;
     minDeadlineDate: Date;
     users: UserInterface[];
+    projects: ProjectInterface[];
     subscriptions: Subscription[] = [];
 
     constructor(
         private fb: FormBuilder,
         private tasksService: TasksService,
         public userService: UserService,
-        private messagesService: MessagesService
+        private messagesService: MessagesService,
+        private projectsService: ProjectsService
     ) {}
 
     ngOnChanges(changes: SimpleChanges): void {
@@ -40,12 +44,15 @@ export class AddTaskDialogComponent implements OnInit, OnChanges, OnDestroy {
     }
 
     ngOnInit(): void {
-        const sub = this.userService
-            .getAll()
+        const sub = combineLatest({
+            users: this.userService.getAll(),
+            projects: this.projectsService.getByAdministratorId(this.userService.getCurrentUser().id)
+        })
             .pipe(httpRequestStates())
-            .subscribe((requestState: HttpRequestState<UserInterface[]>) => {
+            .subscribe((requestState: HttpRequestState<{users: UserInterface[]; projects: ProjectInterface[]}>) => {
                 if (!requestState.isLoading && !requestState.error) {
-                    this.users = requestState.value;
+                    this.users = requestState.value.users;
+                    this.projects = requestState.value.projects;
                 } else if (requestState.error) {
                     this.messagesService.showError();
                 }
@@ -82,6 +89,7 @@ export class AddTaskDialogComponent implements OnInit, OnChanges, OnDestroy {
             title: [this.task ? this.task.title : '', Validators.required],
             deadlineDate: [this.task ? new Date(this.task.deadlineDate) : nowPlusTwoWeek],
             executorId: [this.task ? this.task.executorId : 1],
+            projectId: [this.task ? this.task.projectId : 1],
             body: [this.task ? this.task.body : '', Validators.required]
         });
     }

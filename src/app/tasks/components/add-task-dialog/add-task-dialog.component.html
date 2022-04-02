@@ -16,7 +16,7 @@
         </div>
 
         <div class="grid">
-            <div class="field col-6">
+            <div class="field col-4">
                 <label class="block" for="add-task-datepicker">Complete until</label>
                 <p-calendar
                     inputId="add-task-datepicker"
@@ -27,16 +27,33 @@
                 ></p-calendar>
             </div>
 
-            <div class="field col-6">
+            <div class="field col-4">
+                <label for="add-task-project">Project</label>
+                <p-dropdown
+                    inputId="add-task-project"
+                    styleClass="w-full"
+                    [options]="projects"
+                    optionValue="id"
+                    optionLabel="name"
+                    formControlName="projectId"
+                ></p-dropdown>
+            </div>
+
+            <div class="field col-4">
                 <label for="add-task-executor">Executor</label>
                 <p-dropdown
                     inputId="add-task-executor"
                     styleClass="w-full"
                     [options]="users"
-                    optionLabel="username"
                     optionValue="id"
                     formControlName="executorId"
-                ></p-dropdown>
+                >
+                    <ng-template pTemplate="item" let-item> {{ item.firstName + ' ' + item.lastName }} </ng-template>
+
+                    <ng-template pTemplate="selectedItem" let-item>
+                        {{ item.firstName + ' ' + item.lastName }}
+                    </ng-template>
+                </p-dropdown>
             </div>
         </div>
 
