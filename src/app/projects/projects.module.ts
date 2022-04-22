@@ -5,6 +5,7 @@ import {ProjectsService} from './services/projects.service';
 import {RouterModule, Routes} from '@angular/router';
 import {CardModule} from 'primeng/card';
 import {ProjectPageComponent} from './components/project-page/project-page.component';
+import { ProjectComponent } from './components/project/project.component';
 
 const routes: Routes = [
     {
@@ -23,7 +24,7 @@ const routes: Routes = [
 ];
 
 @NgModule({
-    declarations: [ProjectsListComponent, ProjectPageComponent],
+    declarations: [ProjectsListComponent, ProjectPageComponent, ProjectComponent],
     imports: [CommonModule, RouterModule.forChild(routes), CardModule],
     exports: [RouterModule],
     providers: [ProjectsService]

@@ -1,0 +1,8 @@
+<mat-sidenav-container *ngIf="userService.getCurrentUser(); else content" class="sidenav-container">
+    <mat-sidenav mode="over" [opened]="navbarService.opened$ | async" (closed)="navbarService.close()">
+        <tm-navbar></tm-navbar>
+    </mat-sidenav>
+    <ng-container *ngTemplateOutlet="content"></ng-container>
+</mat-sidenav-container>
+
+<ng-template #content> <ng-content></ng-content> </ng-template>

@@ -3,4 +3,5 @@ export interface UserInterface {
     firstName: string;
     lastName: string;
     accessToken?: string;
+    email: string;
 }

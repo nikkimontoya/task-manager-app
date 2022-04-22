@@ -1,48 +1,24 @@
-<div class="w-screen h-screen flex justify-content-center align-items-center">
+<div class="wrapper">
     <div>
         <p>Sign up or <a routerLink="/login">sign in</a> if you already have an account</p>
         <form [formGroup]="form" (submit)="submit()">
-            <div class="field">
-                <input
-                    type="text"
-                    class="inputfield p-inputtext-sm"
-                    pInputText
-                    placeholder="First name"
-                    formControlName="firstName"
-                />
-            </div>
+            <mat-form-field>
+                <input matInput type="text" placeholder="First name" formControlName="firstName" />
+            </mat-form-field>
 
-            <div class="field">
-                <input
-                    type="text"
-                    class="inputfield p-inputtext-sm"
-                    pInputText
-                    placeholder="Last name"
-                    formControlName="lastName"
-                />
-            </div>
+            <mat-form-field>
+                <input matInput type="text" placeholder="Last name" formControlName="lastName" />
+            </mat-form-field>
 
-            <div class="field">
-                <input
-                    type="email"
-                    class="inputfield p-inputtext-sm"
-                    pInputText
-                    placeholder="Email"
-                    formControlName="email"
-                />
-            </div>
+            <mat-form-field>
+                <input matInput type="email" placeholder="Email" formControlName="email" />
+            </mat-form-field>
 
-            <div class="field">
-                <input
-                    type="password"
-                    class="inputfield p-inputtext-sm"
-                    pInputText
-                    placeholder="Password"
-                    formControlName="password"
-                />
-            </div>
+            <mat-form-field>
+                <input matInput type="password" placeholder="Password" formControlName="password" />
+            </mat-form-field>
 
-            <button pButton type="submit" class="p-button-sm">Sign up</button>
+            <button mat-raised-button color="primary" type="submit" class="p-button-sm">Sign up</button>
         </form>
     </div>
 </div>

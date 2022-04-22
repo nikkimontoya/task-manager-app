@@ -12,6 +12,10 @@ import {ToastModule} from 'primeng/toast';
 import {MessageService} from 'primeng/api';
 import {SharedModule} from './shared/shared.module';
 import {ProjectsModule} from './projects/projects.module';
+import {MatSidenavModule} from '@angular/material/sidenav';
+import {MatToolbarModule} from '@angular/material/toolbar';
+import {MatIconModule} from '@angular/material/icon';
+import {MatListModule} from '@angular/material/list';
 
 const INTERCEPTOR_PROVIDER: Provider = {
     provide: HTTP_INTERCEPTORS,
@@ -29,7 +33,11 @@ const INTERCEPTOR_PROVIDER: Provider = {
         BrowserAnimationsModule,
         ToastModule,
         SharedModule,
-        ProjectsModule
+        ProjectsModule,
+        MatSidenavModule,
+        MatToolbarModule,
+        MatIconModule,
+        MatListModule
     ],
     providers: [INTERCEPTOR_PROVIDER, MessageService],
     bootstrap: [AppComponent]

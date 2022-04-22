@@ -1,28 +1,16 @@
-<div class="w-screen h-screen flex justify-content-center align-items-center">
+<div class="wrapper">
     <div>
         <p>Sign in or <a routerLink="/register">register</a></p>
         <form [formGroup]="form" (submit)="submit()">
-            <div class="field">
-                <input
-                    type="email"
-                    class="inputfield p-inputtext-sm"
-                    pInputText
-                    placeholder="Email"
-                    formControlName="email"
-                />
-            </div>
+            <mat-form-field>
+                <input matInput type="email" placeholder="Email" formControlName="email" />
+            </mat-form-field>
 
-            <div class="field">
-                <input
-                    type="password"
-                    class="inputfield p-inputtext-sm"
-                    pInputText
-                    placeholder="Password"
-                    formControlName="password"
-                />
-            </div>
+            <mat-form-field>
+                <input matInput type="password" placeholder="Password" formControlName="password" />
+            </mat-form-field>
 
-            <button pButton type="submit" class="p-button-sm">Sign in</button>
+            <button mat-raised-button color="primary" type="submit" class="p-button-sm">Sign in</button>
         </form>
     </div>
 </div>

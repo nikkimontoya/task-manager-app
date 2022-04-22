@@ -19,6 +19,7 @@ export class TaskListComponent implements OnInit, OnDestroy {
     error: string = null;
     editingTask: TaskInterface | null = null;
     subscriptions: Subscription[] = [];
+    columnsToDisplay: string[] = ['title', 'executor', 'author', 'project', 'createdAt', 'deadlineDate'];
 
     constructor(
         private tasksService: TasksService,

@@ -22,6 +22,8 @@ import {RippleModule} from 'primeng/ripple';
 import {TableModule} from 'primeng/table';
 import {RouterModule} from '@angular/router';
 import {MenuModule} from 'primeng/menu';
+import {MatTableModule} from '@angular/material/table';
+import {MatCardModule} from '@angular/material/card';
 
 @NgModule({
     declarations: [TaskListComponent, AddTaskDialogComponent, TaskComponent, TaskPageComponent],
@@ -43,7 +45,9 @@ import {MenuModule} from 'primeng/menu';
         RippleModule,
         TableModule,
         RouterModule,
-        MenuModule
+        MenuModule,
+        MatTableModule,
+        MatCardModule
     ],
     providers: [TasksService]
 })

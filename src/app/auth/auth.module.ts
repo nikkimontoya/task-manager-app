@@ -8,6 +8,9 @@ import {ReactiveFormsModule} from '@angular/forms';
 import {InputTextModule} from 'primeng/inputtext';
 import {ButtonModule} from 'primeng/button';
 import {SharedModule} from '../shared/shared.module';
+import {MatFormFieldModule} from '@angular/material/form-field';
+import {MatInputModule} from '@angular/material/input';
+import {MatButtonModule} from '@angular/material/button';
 
 const routes: Routes = [
     {
@@ -29,7 +32,10 @@ const routes: Routes = [
         ReactiveFormsModule,
         InputTextModule,
         ButtonModule,
-        SharedModule
+        SharedModule,
+        MatFormFieldModule,
+        MatInputModule,
+        MatButtonModule
     ]
 })
 export class AuthModule {}

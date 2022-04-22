@@ -1,0 +1,23 @@
+<div class="user-info">
+    <mat-icon>account_circle</mat-icon>
+    <p class="username">
+        {{ user.firstName + ' ' + user.lastName }}
+    </p>
+    <p class="email">{{ user.email }}</p>
+</div>
+
+<mat-divider></mat-divider>
+
+<mat-nav-list>
+    <ng-container *ngFor="let item of items; let idx = index">
+        <mat-list-item [routerLink]="item.link">
+            <mat-icon class="sidenav-item-icon">{{ item.icon }}</mat-icon> {{ item.title }}
+        </mat-list-item>
+    </ng-container>
+
+    <mat-divider></mat-divider>
+
+    <mat-list-item (click)="userService.logout()">
+        <mat-icon class="sidenav-item-icon">logout</mat-icon> Logout
+    </mat-list-item>
+</mat-nav-list>

@@ -1,6 +1,7 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {MenuItem} from 'primeng/api';
 import {UserService} from '../../services/user.service';
+import {NavbarService} from '../../services/navbar.service';
 
 @Component({
     selector: 'tm-top-menu',
@@ -8,22 +9,11 @@ import {UserService} from '../../services/user.service';
     styleUrls: ['./top-menu.component.scss']
 })
 export class TopMenuComponent implements OnInit {
-    items: MenuItem[];
+    @Input() pageTitle: string;
 
-    constructor(private userService: UserService) {}
+    constructor(private userService: UserService, public navbarService: NavbarService) {}
 
-    ngOnInit(): void {
-        this.items = [
-            {
-                label: 'Projects',
-                routerLink: ['/projects']
-            },
-            {
-                label: 'Tasks',
-                routerLink: ['/tasks']
-            }
-        ];
-    }
+    ngOnInit(): void {}
 
     logout() {
         this.userService.logout();
