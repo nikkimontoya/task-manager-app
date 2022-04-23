@@ -11,4 +11,8 @@ export class ProjectsService {
     getByAdministratorId(id: number): Observable<ProjectInterface[]> {
         return this.http.get<ProjectInterface[]>(`${environment.apiUrl}/projects`, {params: {administratorId: id}});
     }
+
+    getById(id: number): Observable<ProjectInterface> {
+        return this.http.get<ProjectInterface>(`${environment.apiUrl}/projects/${id}`);
+    }
 }

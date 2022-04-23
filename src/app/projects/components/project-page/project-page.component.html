@@ -1,2 +1,32 @@
 <tm-top-menu pageTitle="Project"></tm-top-menu>
-<p>project-page works!</p>
+
+<div class="container project-container">
+    <h1>{{ project.name }}</h1>
+
+    <div class="data-container">
+        <mat-card>
+            <mat-card-title>Participants</mat-card-title>
+
+            <mat-card-content>
+                <table mat-table [dataSource]="project.users">
+                    <ng-container matColumnDef="name">
+                        <th mat-header-cell *matHeaderCellDef>Name</th>
+                        <td mat-cell *matCellDef="let user">{{ user.firstName + ' ' + user.lastName }}</td>
+                    </ng-container>
+
+                    <tr mat-header-row *matHeaderRowDef="columnsToDisplay"></tr>
+                    <tr mat-row *matRowDef="let myRowData; columns: columnsToDisplay"></tr>
+                </table>
+            </mat-card-content>
+        </mat-card>
+
+        <mat-card>
+            <mat-card-title>Tasks</mat-card-title>
+
+            <mat-card-content>
+                There will be a task list
+                <!--                <tm-task-list [tasks]="project.tasks"></tm-task-list>-->
+            </mat-card-content>
+        </mat-card>
+    </div>
+</div>

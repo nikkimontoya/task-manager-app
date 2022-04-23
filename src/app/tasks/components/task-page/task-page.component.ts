@@ -1,9 +1,7 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {TaskInterface} from '../../types/task.interface';
-import {Subscription, switchMap} from 'rxjs';
+import {Subscription} from 'rxjs';
 import {ActivatedRoute} from '@angular/router';
-import {TasksService} from '../../services/tasks.service';
-import {HttpRequestState, httpRequestStates} from 'ngx-http-request-state';
 
 @Component({
     selector: 'tm-task-page',

@@ -24,9 +24,10 @@ import {RouterModule} from '@angular/router';
 import {MenuModule} from 'primeng/menu';
 import {MatTableModule} from '@angular/material/table';
 import {MatCardModule} from '@angular/material/card';
+import {TaskListPageComponent} from './components/task-list-page/task-list-page.component';
 
 @NgModule({
-    declarations: [TaskListComponent, AddTaskDialogComponent, TaskComponent, TaskPageComponent],
+    declarations: [TaskListComponent, AddTaskDialogComponent, TaskComponent, TaskPageComponent, TaskListPageComponent],
     imports: [
         CommonModule,
         ReactiveFormsModule,
@@ -49,6 +50,7 @@ import {MatCardModule} from '@angular/material/card';
         MatTableModule,
         MatCardModule
     ],
+    exports: [TaskListComponent],
     providers: [TasksService]
 })
 export class TasksModule {}

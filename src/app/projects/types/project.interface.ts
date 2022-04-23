@@ -1,3 +1,6 @@
+import {TaskInterface} from '../../tasks/types/task.interface';
+import {UserInterface} from '../../shared/types/user.interface';
+
 export interface ProjectInterface {
     id: number;
     name: string;
@@ -6,4 +9,6 @@ export interface ProjectInterface {
     administratorId: number;
     createdAt: Date;
     updatedAt: Date;
+    tasks?: TaskInterface[];
+    users?: UserInterface[];
 }

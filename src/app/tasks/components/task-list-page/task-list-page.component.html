@@ -1,0 +1,16 @@
+<tm-add-task-dialog
+    [(showDialog)]="showAddDialog"
+    [task]="editingTask"
+    (taskAdded)="onTaskAdded($event)"
+    (taskEdited)="onTaskEdited($event)"
+></tm-add-task-dialog>
+
+<p-confirmPopup></p-confirmPopup>
+
+<tm-top-menu pageTitle="Tasks"></tm-top-menu>
+
+<div class="container task-list">
+    <mat-card>
+        <tm-task-list *ngIf="tasks" [tasks]="tasks"></tm-task-list>
+    </mat-card>
+</div>

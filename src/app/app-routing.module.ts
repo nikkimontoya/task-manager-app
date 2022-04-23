@@ -1,9 +1,9 @@
 import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
-import {TaskListComponent} from './tasks/components/task-list/task-list.component';
 import {AuthGuard} from './auth/guards/auth.guard';
 import {TaskPageComponent} from './tasks/components/task-page/task-page.component';
 import TaskResolver from './tasks/services/task.resolver';
+import {TaskListPageComponent} from './tasks/components/task-list-page/task-list-page.component';
 
 const routes: Routes = [
     {
@@ -13,7 +13,7 @@ const routes: Routes = [
     },
     {
         path: 'tasks',
-        component: TaskListComponent,
+        component: TaskListPageComponent,
         canActivate: [AuthGuard]
     },
     {

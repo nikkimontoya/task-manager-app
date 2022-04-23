@@ -5,10 +5,12 @@ import {ProjectsService} from './services/projects.service';
 import {RouterModule, Routes} from '@angular/router';
 import {CardModule} from 'primeng/card';
 import {ProjectPageComponent} from './components/project-page/project-page.component';
-import {ProjectComponent} from './components/project/project.component';
 import {SharedModule} from '../shared/shared.module';
 import {MatCardModule} from '@angular/material/card';
 import {MatButtonModule} from '@angular/material/button';
+import ProjectResolver from './services/project.resolver';
+import {MatTableModule} from '@angular/material/table';
+import {TasksModule} from '../tasks/tasks.module';
 
 const routes: Routes = [
     {
@@ -22,14 +24,26 @@ const routes: Routes = [
     },
     {
         path: ':id',
-        component: ProjectPageComponent
+        component: ProjectPageComponent,
+        resolve: {
+            project: ProjectResolver
+        }
     }
 ];
 
 @NgModule({
-    declarations: [ProjectsListComponent, ProjectPageComponent, ProjectComponent],
-    imports: [CommonModule, RouterModule.forChild(routes), CardModule, SharedModule, MatCardModule, MatButtonModule],
+    declarations: [ProjectsListComponent, ProjectPageComponent],
+    imports: [
+        CommonModule,
+        RouterModule.forChild(routes),
+        CardModule,
+        SharedModule,
+        MatCardModule,
+        MatButtonModule,
+        MatTableModule,
+        TasksModule
+    ],
     exports: [RouterModule],
-    providers: [ProjectsService]
+    providers: [ProjectsService, ProjectResolver]
 })
 export class ProjectsModule {}
