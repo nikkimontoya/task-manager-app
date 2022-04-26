@@ -22,6 +22,8 @@ export class TasksService {
                             id
                             title
                             body
+                            deadlineDate
+                            createdAt
                             author {
                                 firstName
                                 lastName
@@ -30,8 +32,6 @@ export class TasksService {
                                 firstName
                                 lastName
                             }
-                            deadlineDate
-                            createdAt
                             project {
                                 id
                                 name

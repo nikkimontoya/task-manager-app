@@ -1,4 +1,4 @@
-import {Component, Input} from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {TaskInterface} from '../../types/task.interface';
 
 @Component({
@@ -6,7 +6,15 @@ import {TaskInterface} from '../../types/task.interface';
     templateUrl: './task-list.component.html',
     styleUrls: ['./task-list.component.scss']
 })
-export class TaskListComponent {
+export class TaskListComponent implements OnInit {
     @Input() tasks: TaskInterface[];
-    columnsToDisplay: string[] = ['title', 'executor', 'author', 'project', 'createdAt', 'deadlineDate'];
+    @Input() showProjectColumn: boolean;
+
+    columnsToDisplay: string[];
+
+    ngOnInit(): void {
+        this.columnsToDisplay = this.showProjectColumn
+            ? ['title', 'executor', 'author', 'project', 'createdAt', 'deadlineDate']
+            : ['title', 'executor', 'author', 'createdAt', 'deadlineDate'];
+    }
 }
