@@ -7,15 +7,40 @@ import {UserInterface} from '../../shared/types/user.interface';
 import {ProjectInterface} from '../../projects/types/project.interface';
 import {TaskDto} from '../dto/task.dto';
 import {TasksDto} from '../dto/tasks.dto';
+import {Apollo, gql} from 'apollo-angular';
 
 @Injectable()
 export class TasksService {
-    constructor(private http: HttpClient) {}
+    constructor(private http: HttpClient, private apollo: Apollo) {}
 
     getAll(): Observable<TaskInterface[]> {
-        return this.http
-            .get<TasksDto>(`${environment.apiUrl}/tasks`)
-            .pipe(map((response) => this.processTasks(response)));
+        return this.apollo
+            .watchQuery<{tasks: TaskInterface[]}>({
+                query: gql`
+                    {
+                        tasks {
+                            id
+                            title
+                            body
+                            author {
+                                firstName
+                                lastName
+                            }
+                            executor {
+                                firstName
+                                lastName
+                            }
+                            deadlineDate
+                            createdAt
+                            project {
+                                id
+                                name
+                            }
+                        }
+                    }
+                `
+            })
+            .valueChanges.pipe(map((result) => result.data.tasks as TaskInterface[]));
     }
 
     getById(id: number): Observable<TaskInterface> {
