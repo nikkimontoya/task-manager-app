@@ -25,6 +25,9 @@ import {MenuModule} from 'primeng/menu';
 import {MatTableModule} from '@angular/material/table';
 import {MatCardModule} from '@angular/material/card';
 import {TaskListPageComponent} from './components/task-list-page/task-list-page.component';
+import {AllTasksQuery} from './graphql/all.tasks.query';
+import {ByIdTasksQuery} from './graphql/by-id.tasks.query';
+import {AddTaskMutation} from './graphql/add-task.mutation';
 
 @NgModule({
     declarations: [TaskListComponent, AddTaskDialogComponent, TaskComponent, TaskPageComponent, TaskListPageComponent],
@@ -51,6 +54,6 @@ import {TaskListPageComponent} from './components/task-list-page/task-list-page.
         MatCardModule
     ],
     exports: [TaskListComponent],
-    providers: [TasksService]
+    providers: [TasksService, AllTasksQuery, ByIdTasksQuery, AddTaskMutation]
 })
 export class TasksModule {}

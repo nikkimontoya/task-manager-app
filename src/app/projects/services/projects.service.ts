@@ -44,6 +44,6 @@ export class ProjectsService {
                     }
                 `
             })
-            .pipe(map((result) => result.data.projects[0] as ProjectInterface));
+            .pipe(map((result) => result.data.projects[0]));
     }
 }
