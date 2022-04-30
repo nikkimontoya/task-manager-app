@@ -28,6 +28,13 @@ import {TaskListPageComponent} from './components/task-list-page/task-list-page.
 import {AllTasksQuery} from './graphql/all.tasks.query';
 import {ByIdTasksQuery} from './graphql/by-id.tasks.query';
 import {AddTaskMutation} from './graphql/add-task.mutation';
+import {MatDialogModule} from '@angular/material/dialog';
+import {MatFormFieldModule} from '@angular/material/form-field';
+import {MatInputModule} from '@angular/material/input';
+import {MatDatepickerModule} from '@angular/material/datepicker';
+import {MatNativeDateModule} from '@angular/material/core';
+import {MatButtonModule} from '@angular/material/button';
+import {MatSelectModule} from '@angular/material/select';
 
 @NgModule({
     declarations: [TaskListComponent, AddTaskDialogComponent, TaskComponent, TaskPageComponent, TaskListPageComponent],
@@ -51,7 +58,14 @@ import {AddTaskMutation} from './graphql/add-task.mutation';
         RouterModule,
         MenuModule,
         MatTableModule,
-        MatCardModule
+        MatCardModule,
+        MatDialogModule,
+        MatFormFieldModule,
+        MatInputModule,
+        MatDatepickerModule,
+        MatNativeDateModule,
+        MatButtonModule,
+        MatSelectModule
     ],
     exports: [TaskListComponent],
     providers: [TasksService, AllTasksQuery, ByIdTasksQuery, AddTaskMutation]

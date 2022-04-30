@@ -5,5 +5,13 @@
         </button>
 
         <span>{{ pageTitle }}</span>
+
+        <div class="filler"></div>
+
+        <ng-container *ngIf="actions.length">
+            <button *ngFor="let action of actions" mat-icon-button (click)="action.handler()" [title]="action.tooltip">
+                <mat-icon>{{ action.icon }}</mat-icon>
+            </button>
+        </ng-container>
     </mat-toolbar-row>
 </mat-toolbar>

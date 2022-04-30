@@ -1,13 +1,6 @@
-<tm-add-task-dialog
-    [(showDialog)]="showAddDialog"
-    [task]="editingTask"
-    (taskAdded)="onTaskAdded($event)"
-    (taskEdited)="onTaskEdited($event)"
-></tm-add-task-dialog>
-
 <p-confirmPopup></p-confirmPopup>
 
-<tm-top-menu pageTitle="Tasks"></tm-top-menu>
+<tm-top-menu pageTitle="Tasks" [actions]="topMenuActions"></tm-top-menu>
 
 <div class="container task-list">
     <mat-card>

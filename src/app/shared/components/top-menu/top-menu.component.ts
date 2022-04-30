@@ -1,7 +1,7 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {MenuItem} from 'primeng/api';
 import {UserService} from '../../services/user.service';
 import {NavbarService} from '../../services/navbar.service';
+import {TopMenuActionInterface} from './types';
 
 @Component({
     selector: 'tm-top-menu',
@@ -10,6 +10,7 @@ import {NavbarService} from '../../services/navbar.service';
 })
 export class TopMenuComponent implements OnInit {
     @Input() pageTitle: string;
+    @Input() actions: TopMenuActionInterface[] = [];
 
     constructor(private userService: UserService, public navbarService: NavbarService) {}
 

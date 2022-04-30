@@ -1,66 +1,44 @@
-<p-dialog
-    [header]="task ? 'Edit the task' : 'Add a task'"
-    [(visible)]="showDialog"
-    (onHide)="showDialogChange.emit(false)"
-    [modal]="true"
->
-    <form [formGroup]="form" (submit)="submit()">
-        <div class="field">
-            <input
-                type="text"
-                class="inputfield p-inputtext-sm w-full"
-                pInputText
-                placeholder="Title"
-                formControlName="title"
-            />
+<h1 mat-dialog-title>{{ data.task ? 'Edit the task' : 'Add a task' }}</h1>
+
+<form [formGroup]="form" (submit)="submit()">
+    <div mat-dialog-content>
+        <mat-form-field class="w100">
+            <input matInput type="text" pInputText placeholder="Title" formControlName="title" />
+        </mat-form-field>
+
+        <div class="row">
+            <mat-form-field>
+                <mat-label>Complete until</mat-label>
+                <input matInput [min]="minDeadlineDate" [matDatepicker]="picker" formControlName="deadlineDate" />
+                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                <mat-datepicker #picker></mat-datepicker>
+            </mat-form-field>
+
+            <mat-form-field>
+                <mat-label>Project</mat-label>
+                <mat-select formControlName="projectId">
+                    <mat-option *ngFor="let project of data.projects" [value]="project.id">
+                        {{ project.name }}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+
+            <mat-form-field>
+                <mat-label>Executor</mat-label>
+                <mat-select formControlName="executorId">
+                    <mat-option *ngFor="let user of data.users" [value]="user.id">
+                        {{ user.firstName }} {{ user.lastName }}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
         </div>
 
-        <div class="grid">
-            <div class="field col-4">
-                <label class="block" for="add-task-datepicker">Complete until</label>
-                <p-calendar
-                    inputId="add-task-datepicker"
-                    [showIcon]="true"
-                    dateFormat="d M yy"
-                    [minDate]="minDeadlineDate"
-                    formControlName="deadlineDate"
-                ></p-calendar>
-            </div>
+        <mat-form-field class="w100">
+            <textarea matInput placeholder="Body" formControlName="body" rows="14"></textarea>
+        </mat-form-field>
+    </div>
 
-            <div class="field col-4">
-                <label for="add-task-project">Project</label>
-                <p-dropdown
-                    inputId="add-task-project"
-                    styleClass="w-full"
-                    [options]="projects"
-                    optionValue="id"
-                    optionLabel="name"
-                    formControlName="projectId"
-                ></p-dropdown>
-            </div>
-
-            <div class="field col-4">
-                <label for="add-task-executor">Executor</label>
-                <p-dropdown
-                    inputId="add-task-executor"
-                    styleClass="w-full"
-                    [options]="users"
-                    optionValue="id"
-                    formControlName="executorId"
-                >
-                    <ng-template pTemplate="item" let-item> {{ item.firstName + ' ' + item.lastName }} </ng-template>
-
-                    <ng-template pTemplate="selectedItem" let-item>
-                        {{ item.firstName + ' ' + item.lastName }}
-                    </ng-template>
-                </p-dropdown>
-            </div>
-        </div>
-
-        <div class="field">
-            <textarea pInputTextarea placeholder="Body" formControlName="body" class="w-full" rows="14"></textarea>
-        </div>
-
-        <button pButton type="submit" class="p-button-sm" [disabled]="!form.valid">Save</button>
-    </form>
-</p-dialog>
+    <div mat-dialog-actions>
+        <button mat-raised-button color="primary" type="submit" [disabled]="!form.valid">Save</button>
+    </div>
+</form>
