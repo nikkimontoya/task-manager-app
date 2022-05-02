@@ -1,6 +1,6 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
-import {UserService} from '../../../shared/services/user.service';
+import {UserService} from '../../../user/services/user.service';
 import {Router} from '@angular/router';
 import {MessagesService} from '../../../shared/services/messages.service';
 import {HttpRequestState, httpRequestStates} from 'ngx-http-request-state';

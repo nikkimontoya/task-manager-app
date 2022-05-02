@@ -4,11 +4,13 @@ import {MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
 import {TasksService} from '../../services/tasks.service';
 import {TaskInterface} from '../../types/task.interface';
 import {Subscription} from 'rxjs';
-import {UserService} from '../../../shared/services/user.service';
-import {UserInterface} from '../../../shared/types/user.interface';
+import {UserService} from '../../../user/services/user.service';
+import {UserInterface} from '../../../user/types/user.interface';
 import {HttpRequestState, httpRequestStates} from 'ngx-http-request-state';
 import {MessagesService} from '../../../shared/services/messages.service';
 import {ProjectInterface} from '../../../projects/types/project.interface';
+import {AddTaskDialogDataService} from '../../services/add-task-dialog-data.service';
+import {AddTaskDialogProjectInterface, AddTaskDialogUserInterface} from '../../types/add-task-dialog-data.interface';
 
 @Component({
     selector: 'tm-add-task-dialog',
@@ -25,23 +27,28 @@ export class AddTaskDialogComponent implements OnInit, OnDestroy {
     form: FormGroup;
     minDeadlineDate: Date;
     subscriptions: Subscription[] = [];
+    users: AddTaskDialogUserInterface[] = [];
+    projects: AddTaskDialogProjectInterface[] = [];
 
     constructor(
         private fb: FormBuilder,
         private tasksService: TasksService,
         public userService: UserService,
         private messagesService: MessagesService,
+        private dataService: AddTaskDialogDataService,
         public dialogRef: MatDialogRef<AddTaskDialogComponent>,
         @Inject(MAT_DIALOG_DATA)
         public data: {
             task: TaskInterface | null;
-            users: UserInterface[];
-            projects: ProjectInterface[];
         }
     ) {}
 
     ngOnInit(): void {
-        this.initForm();
+        this.dataService.getData().subscribe((data) => {
+            this.users = data.users;
+            this.projects = data.projects;
+            this.initForm();
+        });
     }
 
     ngOnDestroy(): void {

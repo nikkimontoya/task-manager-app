@@ -1,4 +1,4 @@
-import {UserInterface} from '../../shared/types/user.interface';
+import {UserInterface} from '../../user/types/user.interface';
 
 export interface TaskInterface {
     id: number;

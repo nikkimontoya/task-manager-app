@@ -1,11 +1,11 @@
 import {Injectable} from '@angular/core';
 import {LoginQuery} from '../graphql/login.query';
 import {map, Observable, tap} from 'rxjs';
-import {UserService} from '../../shared/services/user.service';
+import {UserService} from '../../user/services/user.service';
 import {LoginDto} from '../dto/login.dto';
 import {RegisterMutation} from '../graphql/register.mutation';
-import {RegisterInterface} from '../../shared/types/register.interface';
 import {Router} from '@angular/router';
+import {RegisterInterface} from '../types/register.interface';
 
 @Injectable({providedIn: 'root'})
 export class AuthService {

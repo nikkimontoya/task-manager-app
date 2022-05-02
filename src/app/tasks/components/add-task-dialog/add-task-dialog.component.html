@@ -1,6 +1,6 @@
 <h1 mat-dialog-title>{{ data.task ? 'Edit the task' : 'Add a task' }}</h1>
 
-<form [formGroup]="form" (submit)="submit()">
+<form *ngIf="form; else loader" [formGroup]="form" (submit)="submit()">
     <div mat-dialog-content>
         <mat-form-field class="w100">
             <input matInput type="text" pInputText placeholder="Title" formControlName="title" />
@@ -17,7 +17,7 @@
             <mat-form-field>
                 <mat-label>Project</mat-label>
                 <mat-select formControlName="projectId">
-                    <mat-option *ngFor="let project of data.projects" [value]="project.id">
+                    <mat-option *ngFor="let project of projects" [value]="project.id">
                         {{ project.name }}
                     </mat-option>
                 </mat-select>
@@ -26,8 +26,8 @@
             <mat-form-field>
                 <mat-label>Executor</mat-label>
                 <mat-select formControlName="executorId">
-                    <mat-option *ngFor="let user of data.users" [value]="user.id">
-                        {{ user.firstName }} {{ user.lastName }}
+                    <mat-option *ngFor="let user of users" [value]="user.id">
+                        {{ user.fullName }}
                     </mat-option>
                 </mat-select>
             </mat-form-field>
@@ -42,3 +42,7 @@
         <button mat-raised-button color="primary" type="submit" [disabled]="!form.valid">Save</button>
     </div>
 </form>
+
+<ng-template #loader>
+    <mat-progress-spinner></mat-progress-spinner>
+</ng-template>

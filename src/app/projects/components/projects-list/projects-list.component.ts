@@ -1,7 +1,7 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {ProjectInterface} from '../../types/project.interface';
 import {ProjectsService} from '../../services/projects.service';
-import {UserService} from '../../../shared/services/user.service';
+import {UserService} from '../../../user/services/user.service';
 import {HttpRequestState, httpRequestStates} from 'ngx-http-request-state';
 import {Subscription} from 'rxjs';
 import {Router} from '@angular/router';

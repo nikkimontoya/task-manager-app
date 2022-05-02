@@ -1,5 +1,5 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
-import {combineLatest, Observable, Subscription} from 'rxjs';
+import {Subscription} from 'rxjs';
 import {TasksService} from '../../services/tasks.service';
 import {ConfirmationService} from 'primeng/api';
 import {MessagesService} from '../../../shared/services/messages.service';
@@ -8,10 +8,8 @@ import {TaskInterface} from '../../types/task.interface';
 import {TopMenuActionInterface} from 'src/app/shared/components/top-menu/types';
 import {MatDialog} from '@angular/material/dialog';
 import {AddTaskDialogComponent} from '../add-task-dialog/add-task-dialog.component';
-import {ProjectInterface} from '../../../projects/types/project.interface';
-import {UserInterface} from '../../../shared/types/user.interface';
 import {ProjectsService} from '../../../projects/services/projects.service';
-import {UserService} from '../../../shared/services/user.service';
+import {UserService} from '../../../user/services/user.service';
 
 @Component({
     selector: 'tm-task-list-page',
@@ -22,8 +20,6 @@ import {UserService} from '../../../shared/services/user.service';
 export class TaskListPageComponent implements OnInit, OnDestroy {
     subscriptions: Subscription[] = [];
     tasks: TaskInterface[];
-    availableProjects: ProjectInterface[] = null;
-    availableUsers: UserInterface[] = null;
     showAddDialog = false;
     loading = false;
     error: string = null;
@@ -91,53 +87,10 @@ export class TaskListPageComponent implements OnInit, OnDestroy {
     }
 
     openTaskDialog(task: TaskInterface | null): void {
-        const subs: {users?: Observable<UserInterface[]>; projects?: Observable<ProjectInterface[]>} = {};
-        let dialogRef;
-
-        if (!this.availableProjects) {
-            subs.projects = this.projectsService.getByAdministratorId(this.userService.getCurrentUser().id);
-        }
-
-        if (!this.availableUsers) {
-            subs.users = this.userService.getAll();
-        }
-
-        if (Object.values(subs).length) {
-            const sub = combineLatest(subs)
-                .pipe(httpRequestStates())
-                .subscribe(
-                    (requestState: HttpRequestState<{users?: UserInterface[]; projects?: ProjectInterface[]}>) => {
-                        if (!requestState.isLoading && !requestState.error) {
-                            if (requestState.value.users) {
-                                this.availableUsers = requestState.value.users;
-                            }
-
-                            if (requestState.value.projects) {
-                                this.availableProjects = requestState.value.projects;
-                            }
-
-                            dialogRef = this.addDialog.open(AddTaskDialogComponent, {
-                                data: {
-                                    task,
-                                    projects: this.availableProjects,
-                                    users: this.availableUsers
-                                }
-                            });
-                        } else if (requestState.error) {
-                            this.messagesService.showError();
-                        }
-                    }
-                );
-
-            this.subscriptions.push(sub);
-        } else {
-            dialogRef = this.addDialog.open(AddTaskDialogComponent, {
-                data: {
-                    task,
-                    projects: this.availableProjects,
-                    users: this.availableUsers
-                }
-            });
-        }
+        const dialogRef = this.addDialog.open(AddTaskDialogComponent, {
+            data: {
+                task
+            }
+        });
     }
 }
