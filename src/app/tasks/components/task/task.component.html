@@ -1,12 +1,16 @@
-<p-card [header]="task.title">
-    <ng-template pTemplate="subtitle">
-        Created by {{ task.author.firstName + ' ' + task.author.lastName }} at
-        <strong>{{ task.createdAt | date }}</strong>
-        <br />
-        Assigned to {{ task.executor.firstName + ' ' + task.executor.lastName }}
-        <br />
-        Complete until <strong>{{ task.deadlineDate | date }}</strong>
-    </ng-template>
-
-    {{ task.body }}
-</p-card>
+<mat-card>
+    <mat-card-title-group>
+        <mat-card-title>{{ task.title }}</mat-card-title>
+        <mat-card-subtitle>
+            Created by {{ task.author.firstName + ' ' + task.author.lastName }} at
+            <strong>{{ task.createdAt | date }}</strong>
+            <br />
+            Assigned to {{ task.executor.firstName + ' ' + task.executor.lastName }}
+            <br />
+            Complete until <strong>{{ task.deadlineDate | date }}</strong>
+        </mat-card-subtitle>
+    </mat-card-title-group>
+    <mat-card-content>
+        {{ task.body }}
+    </mat-card-content>
+</mat-card>

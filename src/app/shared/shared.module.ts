@@ -6,9 +6,6 @@ import {UserService} from './services/user.service';
 import {StorageService} from './services/storage.service';
 import {TopMenuComponent} from './components/top-menu/top-menu.component';
 import {MenubarModule} from 'primeng/menubar';
-import {SharedModule as PrimeNgSharedModule} from 'primeng/api';
-import {ButtonModule} from 'primeng/button';
-import {RippleModule} from 'primeng/ripple';
 import {MatSidenavModule} from '@angular/material/sidenav';
 import {MatToolbarModule} from '@angular/material/toolbar';
 import {MatIconModule} from '@angular/material/icon';
@@ -24,9 +21,6 @@ import {LayoutComponent} from './components/layout/layout.component';
         CommonModule,
         ProgressSpinnerModule,
         MenubarModule,
-        PrimeNgSharedModule,
-        ButtonModule,
-        RippleModule,
         MatSidenavModule,
         MatToolbarModule,
         MatIconModule,
