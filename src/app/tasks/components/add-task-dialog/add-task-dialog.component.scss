@@ -3,6 +3,14 @@ form {
     margin-top: 10px;
 }
 
+.spinner-container {
+    width: 1200px;
+    height: 400px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
 .row {
     display: flex;
     justify-content: space-between;
