@@ -5,8 +5,8 @@ import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {HttpRequestState, httpRequestStates} from 'ngx-http-request-state';
 import {Subscription} from 'rxjs';
 
-import {UserService} from '../../../shared/services/user.service';
 import {MessagesService} from '../../../shared/services/messages.service';
+import {AuthService} from '../../services/auth.service';
 
 @Component({
     selector: 'tm-register',
@@ -19,7 +19,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
 
     constructor(
         private fb: FormBuilder,
-        private userService: UserService,
+        private authService: AuthService,
         private router: Router,
         private messagesService: MessagesService
     ) {}
@@ -37,7 +37,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
             return;
         }
 
-        const sub = this.userService
+        const sub = this.authService
             .register(this.form.value)
             .pipe(httpRequestStates())
             .subscribe((requestState: HttpRequestState<any>) => {

@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {UserService} from '../../services/user.service';
 import {UserInterface} from '../../types/user.interface';
 import {NavbarService} from '../../services/navbar.service';
+import {AuthService} from '../../../auth/services/auth.service';
 
 @Component({
     selector: 'tm-navbar',
@@ -23,7 +24,11 @@ export class NavbarComponent implements OnInit {
         }
     ];
 
-    constructor(public userService: UserService, public navbarService: NavbarService) {}
+    constructor(
+        public userService: UserService,
+        public navbarService: NavbarService,
+        private authService: AuthService
+    ) {}
 
     ngOnInit(): void {
         this.user = this.userService.getCurrentUser();
@@ -31,6 +36,6 @@ export class NavbarComponent implements OnInit {
 
     logout() {
         this.navbarService.close();
-        this.userService.logout();
+        this.authService.logout();
     }
 }

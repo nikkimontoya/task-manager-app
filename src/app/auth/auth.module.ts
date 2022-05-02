@@ -12,6 +12,7 @@ import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatInputModule} from '@angular/material/input';
 import {MatButtonModule} from '@angular/material/button';
 import {LoginQuery} from './graphql/login.query';
+import {RegisterMutation} from './graphql/register.mutation';
 import {AuthService} from './services/auth.service';
 
 const routes: Routes = [
@@ -39,6 +40,6 @@ const routes: Routes = [
         MatInputModule,
         MatButtonModule
     ],
-    providers: [LoginQuery, AuthService]
+    providers: [LoginQuery, RegisterMutation]
 })
 export class AuthModule {}
