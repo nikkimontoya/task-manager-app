@@ -10,6 +10,7 @@ export class TaskListComponent implements OnInit {
     @Input() tasks: TaskInterface[];
     @Input() showProjectColumn: boolean;
     @Output() editButtonClick: EventEmitter<TaskInterface> = new EventEmitter<TaskInterface>();
+    @Output() removeButtonClick: EventEmitter<number> = new EventEmitter<number>();
 
     columnsToDisplay: string[];
 

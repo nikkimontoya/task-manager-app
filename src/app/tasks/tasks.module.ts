@@ -26,6 +26,7 @@ import {AddTaskDialogDataService} from './services/add-task-dialog-data.service'
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import {EditTaskMutation} from './graphql/edit-task.mutation';
 import {MatIconModule} from '@angular/material/icon';
+import {RemoveTaskMutation} from './graphql/remove-task.mutation';
 
 @NgModule({
     declarations: [TaskListComponent, AddTaskDialogComponent, TaskComponent, TaskPageComponent, TaskListPageComponent],
@@ -54,7 +55,8 @@ import {MatIconModule} from '@angular/material/icon';
         ByIdTasksQuery,
         AddTaskMutation,
         AddTaskDialogDataService,
-        EditTaskMutation
+        EditTaskMutation,
+        RemoveTaskMutation
     ]
 })
 export class TasksModule {}

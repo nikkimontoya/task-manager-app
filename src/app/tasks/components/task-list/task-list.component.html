@@ -39,6 +39,9 @@
             <button mat-icon-button (click)="editButtonClick.emit(task)">
                 <mat-icon>edit</mat-icon>
             </button>
+            <button mat-icon-button (click)="removeButtonClick.emit(task.id)">
+                <mat-icon>delete</mat-icon>
+            </button>
         </td>
     </ng-container>
 

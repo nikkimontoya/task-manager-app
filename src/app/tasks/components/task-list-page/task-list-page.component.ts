@@ -10,6 +10,7 @@ import {MatDialog} from '@angular/material/dialog';
 import {AddTaskDialogComponent} from '../add-task-dialog/add-task-dialog.component';
 import {ProjectsService} from '../../../projects/services/projects.service';
 import {UserService} from '../../../user/services/user.service';
+import {RemoveTaskResultInterface} from '../../types/remove-task-result.interface';
 
 @Component({
     selector: 'tm-task-list-page',
@@ -63,25 +64,40 @@ export class TaskListPageComponent implements OnInit, OnDestroy {
         this.tasks = [task, ...this.tasks.filter((t) => t.id !== task.id)];
     }
 
-    removeTask(event, id: number): void {
-        this.confirmationService.confirm({
-            target: event.target,
-            message: 'Are you sure you want to remove this task?',
-            accept: () => {
-                const sub = this.tasksService
-                    .removeById(id)
-                    .pipe(httpRequestStates())
-                    .subscribe((requestState: HttpRequestState<any>) => {
-                        if (!requestState.isLoading && !requestState.error) {
-                            this.tasks = this.tasks.filter((task) => task.id !== id);
-                        } else if (requestState.error) {
-                            this.messagesService.showError();
-                        }
-                    });
+    removeTask(id: number): void {
+        // this.confirmationService.confirm({
+        //     target: event.target,
+        //     message: 'Are you sure you want to remove this task?',
+        //     accept: () => {
+        //         const sub = this.tasksService
+        //             .removeById(id)
+        //             .pipe(httpRequestStates())
+        //             .subscribe((requestState: HttpRequestState<any>) => {
+        //                 if (!requestState.isLoading && !requestState.error) {
+        //                     this.tasks = this.tasks.filter((task) => task.id !== id);
+        //                 } else if (requestState.error) {
+        //                     this.messagesService.showError();
+        //                 }
+        //             });
+        //
+        //         this.subscriptions.push(sub);
+        //     }
+        // });
 
-                this.subscriptions.push(sub);
-            }
-        });
+        const sub = this.tasksService
+            .removeById(id)
+            .pipe(httpRequestStates())
+            .subscribe((requestState: HttpRequestState<RemoveTaskResultInterface>) => {
+                if (!requestState.isLoading && !requestState.error) {
+                    if (requestState.value.successful) {
+                        this.tasks = this.tasks.filter((task) => task.id !== id);
+                    }
+                } else if (requestState.error) {
+                    this.messagesService.showError();
+                }
+            });
+
+        this.subscriptions.push(sub);
     }
 
     openTaskDialog(task: TaskInterface | null): void {
