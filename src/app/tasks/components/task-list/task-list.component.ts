@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {TaskInterface} from '../../types/task.interface';
 
 @Component({
@@ -9,12 +9,13 @@ import {TaskInterface} from '../../types/task.interface';
 export class TaskListComponent implements OnInit {
     @Input() tasks: TaskInterface[];
     @Input() showProjectColumn: boolean;
+    @Output() editButtonClick: EventEmitter<TaskInterface> = new EventEmitter<TaskInterface>();
 
     columnsToDisplay: string[];
 
     ngOnInit(): void {
         this.columnsToDisplay = this.showProjectColumn
-            ? ['title', 'executor', 'author', 'project', 'createdAt', 'deadlineDate']
-            : ['title', 'executor', 'author', 'createdAt', 'deadlineDate'];
+            ? ['title', 'executor', 'author', 'project', 'createdAt', 'deadlineDate', 'operations']
+            : ['title', 'executor', 'author', 'createdAt', 'deadlineDate', 'operations'];
     }
 }

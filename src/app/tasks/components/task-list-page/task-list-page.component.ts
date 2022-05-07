@@ -35,9 +35,7 @@ export class TaskListPageComponent implements OnInit, OnDestroy {
         private tasksService: TasksService,
         private confirmationService: ConfirmationService,
         private messagesService: MessagesService,
-        private addDialog: MatDialog,
-        private projectsService: ProjectsService,
-        private userService: UserService
+        private addDialog: MatDialog
     ) {}
 
     ngOnInit(): void {

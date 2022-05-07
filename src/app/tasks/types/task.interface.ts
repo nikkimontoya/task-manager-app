@@ -1,14 +1,13 @@
 import {UserInterface} from '../../user/types/user.interface';
+import {ProjectInterface} from '../../projects/types/project.interface';
 
 export interface TaskInterface {
     id: number;
     title: string;
     body: string;
-    authorId?: number;
-    executorId?: number;
-    projectId: number;
     deadlineDate: Date;
     author?: UserInterface;
     executor?: UserInterface;
+    project?: ProjectInterface;
     createdAt: Date;
 }

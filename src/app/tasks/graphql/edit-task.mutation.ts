@@ -1,24 +1,22 @@
-import {gql, Query} from 'apollo-angular';
+import {gql, Mutation} from 'apollo-angular';
 import {TaskInterface} from '../types/task.interface';
-import {Injectable} from '@angular/core';
 
-@Injectable()
-export class AllTasksQuery extends Query<{tasks: TaskInterface[]}> {
+export class EditTaskMutation extends Mutation<TaskInterface> {
     override document = gql`
-        query allTasks {
-            tasks {
+        mutation editTask($id: ID!, $task: TaskInput!) {
+            editTask(id: $id, task: $task) {
                 id
                 title
                 body
                 deadlineDate
                 createdAt
                 author {
-                    id
-                    fullName
+                    firstName
+                    lastName
                 }
                 executor {
-                    id
-                    fullName
+                    firstName
+                    lastName
                 }
                 project {
                     id

@@ -77,9 +77,9 @@ export class AddTaskDialogComponent implements OnInit, OnDestroy {
 
         this.form = this.fb.group({
             title: [this.data.task ? this.data.task.title : '', Validators.required],
-            deadlineDate: [this.data.task ? new Date(this.data.task.deadlineDate) : nowPlusTwoWeek],
-            executorId: [this.data.task ? this.data.task.executorId : 1],
-            projectId: [this.data.task ? this.data.task.projectId : 1],
+            deadlineDate: [this.data.task?.deadlineDate ? new Date(this.data.task.deadlineDate) : nowPlusTwoWeek],
+            executorId: [this.data.task ? this.data.task.executor.id : 1],
+            projectId: [this.data.task ? this.data.task.project.id : 1],
             body: [this.data.task ? this.data.task.body : '', Validators.required]
         });
     }

@@ -6,6 +6,7 @@ import {TaskInterface} from '../types/task.interface';
 import {AllTasksQuery} from '../graphql/all.tasks.query';
 import {ByIdTasksQuery} from '../graphql/by-id.tasks.query';
 import {AddTaskMutation} from '../graphql/add-task.mutation';
+import {EditTaskMutation} from '../graphql/edit-task.mutation';
 
 @Injectable()
 export class TasksService {
@@ -13,7 +14,8 @@ export class TasksService {
         private http: HttpClient,
         private allTasksQuery: AllTasksQuery,
         private byIdTasksQuery: ByIdTasksQuery,
-        private addTaskMutation: AddTaskMutation
+        private addTaskMutation: AddTaskMutation,
+        private editTaskMutation: EditTaskMutation
     ) {}
 
     getAll(): Observable<TaskInterface[]> {
@@ -25,11 +27,11 @@ export class TasksService {
     }
 
     add(task: TaskInterface): Observable<TaskInterface> {
-        return this.addTaskMutation.mutate({task: task}).pipe(map((result) => result.data));
+        return this.addTaskMutation.mutate({task}).pipe(map((result) => result.data));
     }
 
     editById(id: number, task: TaskInterface): Observable<TaskInterface> {
-        return this.http.put<TaskInterface>(`${environment.apiUrl}/tasks/${id}`, task);
+        return this.editTaskMutation.mutate({id, task}).pipe(map((result) => result.data));
     }
 
     removeById(id: number): Observable<any> {

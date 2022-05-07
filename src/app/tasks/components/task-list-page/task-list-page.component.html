@@ -2,6 +2,11 @@
 
 <div class="container task-list">
     <mat-card>
-        <tm-task-list *ngIf="tasks" [tasks]="tasks" [showProjectColumn]="true"></tm-task-list>
+        <tm-task-list
+            *ngIf="tasks"
+            [tasks]="tasks"
+            [showProjectColumn]="true"
+            (editButtonClick)="openTaskDialog($event)"
+        ></tm-task-list>
     </mat-card>
 </div>
