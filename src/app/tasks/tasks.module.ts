@@ -27,9 +27,17 @@ import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import {EditTaskMutation} from './graphql/edit-task.mutation';
 import {MatIconModule} from '@angular/material/icon';
 import {RemoveTaskMutation} from './graphql/remove-task.mutation';
+import {RemoveTaskConfirmationComponent} from './components/remove-task-confirmation/remove-task-confirmation.component';
 
 @NgModule({
-    declarations: [TaskListComponent, AddTaskDialogComponent, TaskComponent, TaskPageComponent, TaskListPageComponent],
+    declarations: [
+        TaskListComponent,
+        AddTaskDialogComponent,
+        TaskComponent,
+        TaskPageComponent,
+        TaskListPageComponent,
+        RemoveTaskConfirmationComponent
+    ],
     imports: [
         CommonModule,
         ReactiveFormsModule,

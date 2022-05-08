@@ -5,10 +5,8 @@ import {TasksService} from '../../services/tasks.service';
 import {TaskInterface} from '../../types/task.interface';
 import {Subscription} from 'rxjs';
 import {UserService} from '../../../user/services/user.service';
-import {UserInterface} from '../../../user/types/user.interface';
 import {HttpRequestState, httpRequestStates} from 'ngx-http-request-state';
 import {MessagesService} from '../../../shared/services/messages.service';
-import {ProjectInterface} from '../../../projects/types/project.interface';
 import {AddTaskDialogDataService} from '../../services/add-task-dialog-data.service';
 import {AddTaskDialogProjectInterface, AddTaskDialogUserInterface} from '../../types/add-task-dialog-data.interface';
 
@@ -18,12 +16,6 @@ import {AddTaskDialogProjectInterface, AddTaskDialogUserInterface} from '../../t
     styleUrls: ['./add-task-dialog.component.scss']
 })
 export class AddTaskDialogComponent implements OnInit, OnDestroy {
-    @Input() showDialog = false;
-
-    @Output() showDialogChange: EventEmitter<boolean> = new EventEmitter<boolean>();
-    @Output() taskAdded: EventEmitter<TaskInterface> = new EventEmitter<TaskInterface>();
-    @Output() taskEdited: EventEmitter<TaskInterface> = new EventEmitter<TaskInterface>();
-
     form: FormGroup;
     minDeadlineDate: Date;
     subscriptions: Subscription[] = [];
@@ -66,7 +58,6 @@ export class AddTaskDialogComponent implements OnInit, OnDestroy {
             this.addTask();
         }
 
-        this.showDialogChange.emit(false);
         this.form.reset();
     }
 
@@ -93,7 +84,10 @@ export class AddTaskDialogComponent implements OnInit, OnDestroy {
             .pipe(httpRequestStates())
             .subscribe((requestState: HttpRequestState<TaskInterface>) => {
                 if (!requestState.isLoading && !requestState.error) {
-                    this.taskAdded.emit(requestState.value);
+                    this.dialogRef.close({
+                        saved: true,
+                        payload: requestState.value
+                    });
                 } else if (requestState.error) {
                     this.messagesService.showError();
                 }
@@ -111,7 +105,10 @@ export class AddTaskDialogComponent implements OnInit, OnDestroy {
             .pipe(httpRequestStates())
             .subscribe((requestState: HttpRequestState<TaskInterface>) => {
                 if (!requestState.isLoading && !requestState.error) {
-                    this.taskEdited.emit(requestState.value);
+                    this.dialogRef.close({
+                        saved: true,
+                        payload: requestState.value
+                    });
                 } else if (requestState.error) {
                     this.messagesService.showError();
                 }

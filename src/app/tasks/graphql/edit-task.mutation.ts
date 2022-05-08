@@ -1,7 +1,7 @@
 import {gql, Mutation} from 'apollo-angular';
 import {TaskInterface} from '../types/task.interface';
 
-export class EditTaskMutation extends Mutation<TaskInterface> {
+export class EditTaskMutation extends Mutation<{editTask: TaskInterface}> {
     override document = gql`
         mutation editTask($id: ID!, $task: TaskInput!) {
             editTask(id: $id, task: $task) {
@@ -11,12 +11,12 @@ export class EditTaskMutation extends Mutation<TaskInterface> {
                 deadlineDate
                 createdAt
                 author {
-                    firstName
-                    lastName
+                    id
+                    fullName
                 }
                 executor {
-                    firstName
-                    lastName
+                    id
+                    fullName
                 }
                 project {
                     id

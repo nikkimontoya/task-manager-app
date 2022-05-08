@@ -30,14 +30,14 @@ export class TasksService {
     }
 
     add(task: TaskInterface): Observable<TaskInterface> {
-        return this.addTaskMutation.mutate({task}).pipe(map((result) => result.data));
+        return this.addTaskMutation.mutate({task}).pipe(map((result) => result.data.addTask));
     }
 
     editById(id: number, task: TaskInterface): Observable<TaskInterface> {
-        return this.editTaskMutation.mutate({id, task}).pipe(map((result) => result.data));
+        return this.editTaskMutation.mutate({id, task}).pipe(map((result) => result.data.editTask));
     }
 
     removeById(id: number): Observable<RemoveTaskResultInterface> {
-        return this.removeTaskMutation.mutate({id}).pipe(map((result) => result.data));
+        return this.removeTaskMutation.mutate({id}).pipe(map((result) => result.data.removeTask));
     }
 }

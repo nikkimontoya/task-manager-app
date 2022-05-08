@@ -1,5 +1,5 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
-import {Subscription} from 'rxjs';
+import {filter, Subscription, switchMap} from 'rxjs';
 import {TasksService} from '../../services/tasks.service';
 import {ConfirmationService} from 'primeng/api';
 import {MessagesService} from '../../../shared/services/messages.service';
@@ -8,9 +8,8 @@ import {TaskInterface} from '../../types/task.interface';
 import {TopMenuActionInterface} from 'src/app/shared/components/top-menu/types';
 import {MatDialog} from '@angular/material/dialog';
 import {AddTaskDialogComponent} from '../add-task-dialog/add-task-dialog.component';
-import {ProjectsService} from '../../../projects/services/projects.service';
-import {UserService} from '../../../user/services/user.service';
 import {RemoveTaskResultInterface} from '../../types/remove-task-result.interface';
+import {RemoveTaskConfirmationComponent} from '../remove-task-confirmation/remove-task-confirmation.component';
 
 @Component({
     selector: 'tm-task-list-page',
@@ -36,7 +35,7 @@ export class TaskListPageComponent implements OnInit, OnDestroy {
         private tasksService: TasksService,
         private confirmationService: ConfirmationService,
         private messagesService: MessagesService,
-        private addDialog: MatDialog
+        private dialogOpener: MatDialog
     ) {}
 
     ngOnInit(): void {
@@ -65,32 +64,20 @@ export class TaskListPageComponent implements OnInit, OnDestroy {
     }
 
     removeTask(id: number): void {
-        // this.confirmationService.confirm({
-        //     target: event.target,
-        //     message: 'Are you sure you want to remove this task?',
-        //     accept: () => {
-        //         const sub = this.tasksService
-        //             .removeById(id)
-        //             .pipe(httpRequestStates())
-        //             .subscribe((requestState: HttpRequestState<any>) => {
-        //                 if (!requestState.isLoading && !requestState.error) {
-        //                     this.tasks = this.tasks.filter((task) => task.id !== id);
-        //                 } else if (requestState.error) {
-        //                     this.messagesService.showError();
-        //                 }
-        //             });
-        //
-        //         this.subscriptions.push(sub);
-        //     }
-        // });
+        const dialogRef = this.dialogOpener.open(RemoveTaskConfirmationComponent);
 
-        const sub = this.tasksService
-            .removeById(id)
-            .pipe(httpRequestStates())
+        // Removes the task if answer from the dialog is true
+        const sub = dialogRef
+            .afterClosed()
+            .pipe(
+                filter((result) => result),
+                switchMap(() => this.tasksService.removeById(id)),
+                httpRequestStates()
+            )
             .subscribe((requestState: HttpRequestState<RemoveTaskResultInterface>) => {
                 if (!requestState.isLoading && !requestState.error) {
                     if (requestState.value.successful) {
-                        this.tasks = this.tasks.filter((task) => task.id !== id);
+                        this.tasks = this.tasks.filter((task) => task.id != id);
                     }
                 } else if (requestState.error) {
                     this.messagesService.showError();
@@ -101,10 +88,17 @@ export class TaskListPageComponent implements OnInit, OnDestroy {
     }
 
     openTaskDialog(task: TaskInterface | null): void {
-        const dialogRef = this.addDialog.open(AddTaskDialogComponent, {
+        const dialogRef = this.dialogOpener.open(AddTaskDialogComponent, {
             data: {
                 task
             }
         });
+
+        this.subscriptions.push(
+            dialogRef
+                .afterClosed()
+                .pipe(filter((result) => result?.saved))
+                .subscribe((result) => (task ? this.onTaskEdited(result.payload) : this.onTaskAdded(result.payload)))
+        );
     }
 }
