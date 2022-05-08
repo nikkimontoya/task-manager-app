@@ -11,6 +11,7 @@ import {MatButtonModule} from '@angular/material/button';
 import ProjectResolver from './services/project.resolver';
 import {MatTableModule} from '@angular/material/table';
 import {TasksModule} from '../tasks/tasks.module';
+import {ProjectsQuery} from './graphql/projects.query';
 
 const routes: Routes = [
     {
@@ -44,6 +45,6 @@ const routes: Routes = [
         TasksModule
     ],
     exports: [RouterModule],
-    providers: [ProjectsService, ProjectResolver]
+    providers: [ProjectsService, ProjectResolver, ProjectsQuery]
 })
 export class ProjectsModule {}
