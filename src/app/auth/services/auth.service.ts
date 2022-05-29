@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {LoginQuery} from '../graphql/login.query';
+import {LoginMutation} from '../graphql/login.mutation';
 import {map, Observable, tap} from 'rxjs';
 import {UserService} from '../../user/services/user.service';
 import {LoginDto} from '../dto/login.dto';
@@ -10,14 +10,14 @@ import {RegisterInterface} from '../types/register.interface';
 @Injectable({providedIn: 'root'})
 export class AuthService {
     constructor(
-        private loginQuery: LoginQuery,
+        private loginMutation: LoginMutation,
         private userService: UserService,
         private registerMutation: RegisterMutation,
         private router: Router
     ) {}
 
     login(email: string, password: string): Observable<LoginDto> {
-        return this.loginQuery.fetch({email, password}).pipe(
+        return this.loginMutation.mutate({email, password}).pipe(
             map((result) => result.data.login),
             tap((loginData) => this.userService.setCurrentUser(loginData))
         );

@@ -11,7 +11,7 @@ import {SharedModule} from '../shared/shared.module';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatInputModule} from '@angular/material/input';
 import {MatButtonModule} from '@angular/material/button';
-import {LoginQuery} from './graphql/login.query';
+import {LoginMutation} from './graphql/login.mutation';
 import {RegisterMutation} from './graphql/register.mutation';
 import {AuthService} from './services/auth.service';
 
@@ -40,6 +40,6 @@ const routes: Routes = [
         MatInputModule,
         MatButtonModule
     ],
-    providers: [LoginQuery, RegisterMutation]
+    providers: [LoginMutation, RegisterMutation]
 })
 export class AuthModule {}
