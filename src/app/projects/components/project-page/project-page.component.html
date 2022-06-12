@@ -1,31 +1,22 @@
-<tm-top-menu pageTitle="Project"></tm-top-menu>
+<ng-container *ngIf="project$ | async as project">
+    <tm-top-menu pageTitle="Project: {{ project.name }}"></tm-top-menu>
 
-<div class="container project-container">
-    <h1>{{ project.name }}</h1>
+    <mat-card class="container project-container">
+        <nav mat-tab-nav-bar [tabPanel]="tabPanel">
+            <a
+                mat-tab-link
+                *ngFor="let tab of tabs"
+                [routerLink]="tab.link"
+                [active]="router.url.split('/')[3] === tab.link"
+            >
+                {{ tab.title }}
+            </a>
+        </nav>
 
-    <div class="data-container">
-        <mat-card>
-            <mat-card-title>Participants</mat-card-title>
-
-            <mat-card-content>
-                <table mat-table [dataSource]="project.users">
-                    <ng-container matColumnDef="name">
-                        <th mat-header-cell *matHeaderCellDef>Name</th>
-                        <td mat-cell *matCellDef="let user">{{ user.fullName }}</td>
-                    </ng-container>
-
-                    <tr mat-header-row *matHeaderRowDef="columnsToDisplay"></tr>
-                    <tr mat-row *matRowDef="let myRowData; columns: columnsToDisplay"></tr>
-                </table>
-            </mat-card-content>
-        </mat-card>
-
-        <mat-card>
-            <mat-card-title>Tasks</mat-card-title>
-
-            <mat-card-content>
-                <tm-task-list [tasks]="project.tasks"></tm-task-list>
-            </mat-card-content>
-        </mat-card>
-    </div>
-</div>
+        <mat-card-content>
+            <mat-tab-nav-panel #tabPanel>
+                <router-outlet (activate)="onOutletLoaded($event, project)"></router-outlet>
+            </mat-tab-nav-panel>
+        </mat-card-content>
+    </mat-card>
+</ng-container>

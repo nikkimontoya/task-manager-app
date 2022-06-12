@@ -12,11 +12,15 @@ import ProjectResolver from './services/project.resolver';
 import {MatTableModule} from '@angular/material/table';
 import {TasksModule} from '../tasks/tasks.module';
 import {ProjectsQuery} from './graphql/projects.query';
+import {MatTabsModule} from '@angular/material/tabs';
+import {ProjectParticipantsComponent} from './components/project-participants/project-participants.component';
+import {ProjectTasksComponent} from './components/project-tasks/project-tasks.component';
+import {ProjectDescriptionComponent} from './components/project-description/project-description.component';
 
 const routes: Routes = [
     {
         path: '',
-        redirectTo: '/projects/administrated',
+        redirectTo: 'administrated',
         pathMatch: 'full'
     },
     {
@@ -26,6 +30,25 @@ const routes: Routes = [
     {
         path: ':id',
         component: ProjectPageComponent,
+        children: [
+            {
+                path: '',
+                redirectTo: 'participants',
+                pathMatch: 'full'
+            },
+            {
+                path: 'participants',
+                component: ProjectParticipantsComponent
+            },
+            {
+                path: 'tasks',
+                component: ProjectTasksComponent
+            },
+            {
+                path: 'description',
+                component: ProjectDescriptionComponent
+            }
+        ],
         resolve: {
             project: ProjectResolver
         }
@@ -33,7 +56,13 @@ const routes: Routes = [
 ];
 
 @NgModule({
-    declarations: [ProjectsListComponent, ProjectPageComponent],
+    declarations: [
+        ProjectsListComponent,
+        ProjectPageComponent,
+        ProjectParticipantsComponent,
+        ProjectTasksComponent,
+        ProjectDescriptionComponent
+    ],
     imports: [
         CommonModule,
         RouterModule.forChild(routes),
@@ -42,7 +71,8 @@ const routes: Routes = [
         MatCardModule,
         MatButtonModule,
         MatTableModule,
-        TasksModule
+        TasksModule,
+        MatTabsModule
     ],
     exports: [RouterModule],
     providers: [ProjectsService, ProjectResolver, ProjectsQuery]
