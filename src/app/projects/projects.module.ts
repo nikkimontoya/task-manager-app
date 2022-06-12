@@ -3,7 +3,6 @@ import {CommonModule} from '@angular/common';
 import {ProjectsListComponent} from './components/projects-list/projects-list.component';
 import {ProjectsService} from './services/projects.service';
 import {RouterModule, Routes} from '@angular/router';
-import {CardModule} from 'primeng/card';
 import {ProjectPageComponent} from './components/project-page/project-page.component';
 import {SharedModule} from '../shared/shared.module';
 import {MatCardModule} from '@angular/material/card';
@@ -66,7 +65,6 @@ const routes: Routes = [
     imports: [
         CommonModule,
         RouterModule.forChild(routes),
-        CardModule,
         SharedModule,
         MatCardModule,
         MatButtonModule,
