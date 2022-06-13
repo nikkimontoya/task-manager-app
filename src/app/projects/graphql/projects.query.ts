@@ -9,6 +9,7 @@ export class ProjectsQuery extends Query<{projects: ProjectInterface[]}> {
             projects(ids: $ids, administratorId: $administratorId) {
                 id
                 name
+                description
                 users {
                     fullName
                 }

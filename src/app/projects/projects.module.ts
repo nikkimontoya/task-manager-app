@@ -15,6 +15,11 @@ import {MatTabsModule} from '@angular/material/tabs';
 import {ProjectParticipantsComponent} from './components/project-participants/project-participants.component';
 import {ProjectTasksComponent} from './components/project-tasks/project-tasks.component';
 import {ProjectDescriptionComponent} from './components/project-description/project-description.component';
+import {MatIconModule} from '@angular/material/icon';
+import {MatFormFieldModule} from '@angular/material/form-field';
+import {MatInputModule} from '@angular/material/input';
+import {ReactiveFormsModule} from '@angular/forms';
+import {EditProjectMutation} from './graphql/edit-project.mutation';
 
 const routes: Routes = [
     {
@@ -70,9 +75,13 @@ const routes: Routes = [
         MatButtonModule,
         MatTableModule,
         TasksModule,
-        MatTabsModule
+        MatTabsModule,
+        MatIconModule,
+        MatFormFieldModule,
+        MatInputModule,
+        ReactiveFormsModule
     ],
     exports: [RouterModule],
-    providers: [ProjectsService, ProjectResolver, ProjectsQuery]
+    providers: [ProjectsService, ProjectResolver, ProjectsQuery, EditProjectMutation]
 })
 export class ProjectsModule {}

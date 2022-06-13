@@ -8,7 +8,7 @@ import {TaskListPageComponent} from './tasks/components/task-list-page/task-list
 const routes: Routes = [
     {
         path: '',
-        redirectTo: '/tasks',
+        redirectTo: '/projects/administrated',
         pathMatch: 'full'
     },
     {

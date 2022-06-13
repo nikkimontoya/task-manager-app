@@ -4,6 +4,7 @@ import {UserInterface} from '../../user/types/user.interface';
 export interface ProjectInterface {
     id: number;
     name: string;
+    description: string;
     taskIds: number[];
     participantIds: number[];
     administratorId: number;
