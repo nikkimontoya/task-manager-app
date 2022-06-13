@@ -1,0 +1,79 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+type User {
+  id: ID!
+  email: String!
+  firstName: String!
+  lastName: String!
+  fullName: String!
+}
+
+type Login {
+  id: ID!
+  email: String!
+  firstName: String!
+  lastName: String!
+  accessToken: String!
+}
+
+type Task {
+  id: ID!
+  title: String!
+  body: String!
+  author: User!
+  executor: User!
+  deadlineDate: DateTime
+  project: Project!
+  createdAt: DateTime!
+}
+
+"""
+A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
+"""
+scalar DateTime
+
+type Project {
+  id: ID!
+  name: String!
+  tasks: [Task!]!
+  users: [User!]!
+  administrator: User!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
+type TaskRemovingResult {
+  successful: Boolean!
+}
+
+type Query {
+  users(ids: [ID!]): [User!]!
+  tasks(ids: [ID!]): [Task!]!
+  projects(ids: [ID!], administratorId: ID): [Project!]!
+}
+
+type Mutation {
+  login(email: String!, password: String!): Login!
+  register(data: RegisterInput!): Login!
+  addTask(task: TaskInput!): Task!
+  editTask(id: ID!, task: TaskInput!): Task!
+  removeTask(id: ID!): TaskRemovingResult!
+}
+
+input RegisterInput {
+  email: String!
+  password: String!
+  firstName: String!
+  lastName: String!
+}
+
+input TaskInput {
+  title: String!
+  body: String!
+  authorId: ID!
+  executorId: ID!
+  deadlineDate: DateTime
+  projectId: ID!
+}

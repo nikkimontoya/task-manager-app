@@ -12,10 +12,9 @@ import {MatButtonModule} from '@angular/material/button';
 import {MatListModule} from '@angular/material/list';
 import {NavbarComponent} from './components/navbar/navbar.component';
 import {LayoutComponent} from './components/layout/layout.component';
-import {LastUrlPartPipe} from './pipes/last-url-part.pipe';
 
 @NgModule({
-    declarations: [LoaderComponent, TopMenuComponent, NavbarComponent, LayoutComponent, LastUrlPartPipe],
+    declarations: [LoaderComponent, TopMenuComponent, NavbarComponent, LayoutComponent],
     providers: [StorageService],
     imports: [
         CommonModule,
@@ -27,6 +26,6 @@ import {LastUrlPartPipe} from './pipes/last-url-part.pipe';
         MatButtonModule,
         MatListModule
     ],
-    exports: [LoaderComponent, TopMenuComponent, NavbarComponent, LayoutComponent, LastUrlPartPipe]
+    exports: [LoaderComponent, TopMenuComponent, NavbarComponent, LayoutComponent]
 })
 export class SharedModule {}

@@ -7,7 +7,9 @@
                 mat-tab-link
                 *ngFor="let tab of tabs"
                 [routerLink]="tab.link"
-                [active]="(router.url | lastUrlPart) === tab.link"
+                routerLinkActive
+                #rla="routerLinkActive"
+                [active]="rla.isActive"
             >
                 {{ tab.title }}
             </a>
