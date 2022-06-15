@@ -1,15 +1,14 @@
-import {Component, OnInit} from '@angular/core';
-import {map, Observable} from 'rxjs';
+import {Component} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
-import {ProjectInterface} from '../../types/project.interface';
+import {ProjectPageDataService} from '../../services/project-page-data.service';
 
 @Component({
     selector: 'tm-project-page',
     templateUrl: './project-page.component.html',
-    styleUrls: ['./project-page.component.scss']
+    styleUrls: ['./project-page.component.scss'],
+    providers: [ProjectPageDataService]
 })
-export class ProjectPageComponent implements OnInit {
-    project$: Observable<ProjectInterface>;
+export class ProjectPageComponent {
     tabs = [
         {
             title: 'Description',
@@ -25,13 +24,9 @@ export class ProjectPageComponent implements OnInit {
         }
     ];
 
-    constructor(public activatedRoute: ActivatedRoute, public router: Router) {}
-
-    ngOnInit(): void {
-        this.project$ = this.activatedRoute.data.pipe(map((data) => data.project));
-    }
-
-    onOutletLoaded(component: any, project: ProjectInterface) {
-        component.project = project;
-    }
+    constructor(
+        public activatedRoute: ActivatedRoute,
+        public router: Router,
+        public dataService: ProjectPageDataService
+    ) {}
 }

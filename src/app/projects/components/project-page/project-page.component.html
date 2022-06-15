@@ -1,4 +1,4 @@
-<ng-container *ngIf="project$ | async as project">
+<ng-container *ngIf="dataService.project$ | async as project">
     <tm-top-menu pageTitle="Project: {{ project.name }}"></tm-top-menu>
 
     <div class="container project-container">
@@ -17,7 +17,7 @@
 
         <mat-tab-nav-panel #tabPanel>
             <div class="tab-content">
-                <router-outlet (activate)="onOutletLoaded($event, project)"></router-outlet>
+                <router-outlet></router-outlet>
             </div>
         </mat-tab-nav-panel>
     </div>

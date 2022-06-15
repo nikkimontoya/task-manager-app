@@ -3,6 +3,7 @@ import {ProjectInterface} from '../../types/project.interface';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {ProjectsService} from '../../services/projects.service';
 import {Subscription} from 'rxjs';
+import {ProjectPageDataService} from '../../services/project-page-data.service';
 
 @Component({
     selector: 'tm-project-description',
@@ -15,10 +16,19 @@ export class ProjectDescriptionComponent implements OnInit, OnDestroy {
     editForm: FormGroup;
     subs: Subscription[] = [];
 
-    constructor(private fb: FormBuilder, private projectsService: ProjectsService) {}
+    constructor(
+        private fb: FormBuilder,
+        private projectsService: ProjectsService,
+        public dataService: ProjectPageDataService
+    ) {}
 
     ngOnInit(): void {
-        this.initEditForm();
+        this.subs.push(
+            this.dataService.project$.subscribe((project) => {
+                this.project = project;
+                this.initEditForm();
+            })
+        );
     }
 
     ngOnDestroy() {

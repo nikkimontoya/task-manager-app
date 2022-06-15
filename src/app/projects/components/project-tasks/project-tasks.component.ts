@@ -1,15 +1,11 @@
-import {Component, OnInit} from '@angular/core';
-import {ProjectInterface} from '../../types/project.interface';
+import {Component} from '@angular/core';
+import {ProjectPageDataService} from '../../services/project-page-data.service';
 
 @Component({
     selector: 'tm-project-tasks',
     templateUrl: './project-tasks.component.html',
     styleUrls: ['./project-tasks.component.scss']
 })
-export class ProjectTasksComponent implements OnInit {
-    project: ProjectInterface;
-
-    constructor() {}
-
-    ngOnInit(): void {}
+export class ProjectTasksComponent {
+    constructor(public dataService: ProjectPageDataService) {}
 }

@@ -1,5 +1,5 @@
 <mat-card>
     <mat-card-content>
-        <tm-task-list [tasks]="project.tasks"></tm-task-list>
+        <tm-task-list [tasks]="(dataService.project$ | async).tasks"></tm-task-list>
     </mat-card-content>
 </mat-card>

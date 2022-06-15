@@ -1,5 +1,5 @@
 <div class="participants-container">
-    <mat-card *ngFor="let user of project.users">
+    <mat-card *ngFor="let user of (dataService.project$ | async).users">
         <mat-card-title>
             {{ user.fullName }}
         </mat-card-title>

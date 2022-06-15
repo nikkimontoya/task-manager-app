@@ -1,16 +1,13 @@
-import {Component, OnInit} from '@angular/core';
-import {ProjectInterface} from '../../types/project.interface';
+import {Component} from '@angular/core';
+import {ProjectPageDataService} from '../../services/project-page-data.service';
 
 @Component({
     selector: 'tm-project-participants',
     templateUrl: './project-participants.component.html',
     styleUrls: ['./project-participants.component.scss']
 })
-export class ProjectParticipantsComponent implements OnInit {
+export class ProjectParticipantsComponent {
     columnsToDisplay: string[] = ['name'];
-    project: ProjectInterface;
 
-    constructor() {}
-
-    ngOnInit(): void {}
+    constructor(public dataService: ProjectPageDataService) {}
 }
