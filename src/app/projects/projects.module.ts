@@ -20,6 +20,10 @@ import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatInputModule} from '@angular/material/input';
 import {ReactiveFormsModule} from '@angular/forms';
 import {EditProjectMutation} from './graphql/edit-project.mutation';
+import {AddProjectDialogComponent} from './components/add-project-dialog/add-project-dialog.component';
+import {MatDialogModule} from '@angular/material/dialog';
+import {ProjectFormComponent} from './components/project-form/project-form.component';
+import {CreateProjectMutation} from './graphql/create-project.mutation';
 
 const routes: Routes = [
     {
@@ -37,7 +41,7 @@ const routes: Routes = [
         children: [
             {
                 path: '',
-                redirectTo: 'participants',
+                redirectTo: 'description',
                 pathMatch: 'full'
             },
             {
@@ -65,7 +69,9 @@ const routes: Routes = [
         ProjectPageComponent,
         ProjectParticipantsComponent,
         ProjectTasksComponent,
-        ProjectDescriptionComponent
+        ProjectDescriptionComponent,
+        AddProjectDialogComponent,
+        ProjectFormComponent
     ],
     imports: [
         CommonModule,
@@ -79,9 +85,10 @@ const routes: Routes = [
         MatIconModule,
         MatFormFieldModule,
         MatInputModule,
-        ReactiveFormsModule
+        ReactiveFormsModule,
+        MatDialogModule
     ],
     exports: [RouterModule],
-    providers: [ProjectsService, ProjectResolver, ProjectsQuery, EditProjectMutation]
+    providers: [ProjectsService, ProjectResolver, ProjectsQuery, EditProjectMutation, CreateProjectMutation]
 })
 export class ProjectsModule {}

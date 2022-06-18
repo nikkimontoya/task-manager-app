@@ -1,4 +1,4 @@
-<tm-top-menu pageTitle="Projects"></tm-top-menu>
+<tm-top-menu pageTitle="Projects" [actions]="topMenuActions"></tm-top-menu>
 
 <div *ngIf="projects$ | async as projects" class="container projects-container">
     <mat-card *ngFor="let project of projects">
@@ -6,8 +6,7 @@
             {{ project.name }}
         </mat-card-title>
         <mat-card-content>
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Adipisci at corporis hic ipsam ipsum quas quasi
-            qui quo saepe voluptate?
+            {{ project.description }}
         </mat-card-content>
         <mat-card-actions>
             <button mat-button color="primary" (click)="goToProject(project.id)">Go to project</button>

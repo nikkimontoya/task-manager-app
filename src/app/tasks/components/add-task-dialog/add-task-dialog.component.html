@@ -1,4 +1,4 @@
-<h1 mat-dialog-title>{{ data.task ? 'Edit the task' : 'Add a task' }}</h1>
+<h2 mat-dialog-title>{{ data.task ? 'Edit the task' : 'Add a task' }}</h2>
 
 <form *ngIf="form; else loader" [formGroup]="form" (submit)="submit()">
     <div mat-dialog-content>

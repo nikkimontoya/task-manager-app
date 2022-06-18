@@ -3,6 +3,7 @@ import {ProjectInterface} from '../../types/project.interface';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {Subscription} from 'rxjs';
 import {ProjectPageDataService} from '../../services/project-page-data.service';
+import {MainProjectDataInterface} from '../../types/main-project-data.interface';
 
 @Component({
     selector: 'tm-project-description',
@@ -37,11 +38,9 @@ export class ProjectDescriptionComponent implements OnInit, OnDestroy {
         });
     }
 
-    save() {
-        if (this.editForm.valid) {
-            this.dataService.editProject(this.editForm.value);
-            this.editMode = false;
-        }
+    save(data: MainProjectDataInterface) {
+        this.dataService.editProject(data);
+        this.editMode = false;
     }
 
     cancel() {

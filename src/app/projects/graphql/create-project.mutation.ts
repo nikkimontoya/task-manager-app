@@ -1,10 +1,11 @@
 import {gql, Mutation} from 'apollo-angular';
 import {ProjectInterface} from '../types/project.interface';
 
-export class EditProjectMutation extends Mutation<{editProject: ProjectInterface}> {
+export class CreateProjectMutation extends Mutation<{createProject: ProjectInterface}> {
     override document = gql`
-        mutation EditProject($id: ID!, $project: EditProjectInput!) {
-            editProject(id: $id, project: $project) {
+        mutation EditProject($project: CreateProjectInput!) {
+            createProject(project: $project) {
+                id
                 name
                 description
             }
