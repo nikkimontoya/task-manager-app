@@ -1,7 +1,6 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {ProjectInterface} from '../../types/project.interface';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
-import {ProjectsService} from '../../services/projects.service';
 import {Subscription} from 'rxjs';
 import {ProjectPageDataService} from '../../services/project-page-data.service';
 
@@ -16,11 +15,7 @@ export class ProjectDescriptionComponent implements OnInit, OnDestroy {
     editForm: FormGroup;
     subs: Subscription[] = [];
 
-    constructor(
-        private fb: FormBuilder,
-        private projectsService: ProjectsService,
-        public dataService: ProjectPageDataService
-    ) {}
+    constructor(private fb: FormBuilder, public dataService: ProjectPageDataService) {}
 
     ngOnInit(): void {
         this.subs.push(
@@ -43,9 +38,10 @@ export class ProjectDescriptionComponent implements OnInit, OnDestroy {
     }
 
     save() {
-        const sub = this.projectsService.edit(this.project.id, this.editForm.value).subscribe();
-        this.subs.push(sub);
-        this.editMode = false;
+        if (this.editForm.valid) {
+            this.dataService.editProject(this.editForm.value);
+            this.editMode = false;
+        }
     }
 
     cancel() {
