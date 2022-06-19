@@ -3,3 +3,8 @@ export interface TopMenuActionInterface {
     tooltip: string;
     handler: Function;
 }
+
+export interface TopMenuStateInterface {
+    title: string;
+    actions: TopMenuActionInterface[];
+}

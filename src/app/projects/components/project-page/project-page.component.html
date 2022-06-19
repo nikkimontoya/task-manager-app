@@ -1,6 +1,4 @@
-<ng-container *ngIf="dataService.project$ | async as project">
-    <tm-top-menu pageTitle="Project: {{ project.name }}"></tm-top-menu>
-
+<ng-container *ngIf="project">
     <div class="container project-container">
         <nav mat-tab-nav-bar [tabPanel]="tabPanel">
             <a

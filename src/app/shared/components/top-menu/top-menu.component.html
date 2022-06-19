@@ -4,14 +4,21 @@
             <mat-icon>menu</mat-icon>
         </button>
 
-        <span>{{ pageTitle }}</span>
+        <ng-container *ngIf="topMenuService.state$ | async as state">
+            <span>{{ state.title }}</span>
 
-        <div class="filler"></div>
+            <div class="filler"></div>
 
-        <ng-container *ngIf="actions.length">
-            <button *ngFor="let action of actions" mat-icon-button (click)="action.handler()" [title]="action.tooltip">
-                <mat-icon>{{ action.icon }}</mat-icon>
-            </button>
+            <ng-container *ngIf="state.actions.length">
+                <button
+                    *ngFor="let action of state.actions"
+                    mat-icon-button
+                    (click)="action.handler()"
+                    [title]="action.tooltip"
+                >
+                    <mat-icon>{{ action.icon }}</mat-icon>
+                </button>
+            </ng-container>
         </ng-container>
     </mat-toolbar-row>
 </mat-toolbar>

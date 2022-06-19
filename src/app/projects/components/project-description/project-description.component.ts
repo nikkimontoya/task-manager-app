@@ -4,6 +4,7 @@ import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {Subscription} from 'rxjs';
 import {ProjectPageDataService} from '../../services/project-page-data.service';
 import {MainProjectDataInterface} from '../../types/main-project-data.interface';
+import {TopMenuService} from '../../../shared/services/top-menu.service';
 
 @Component({
     selector: 'tm-project-description',
@@ -13,29 +14,22 @@ import {MainProjectDataInterface} from '../../types/main-project-data.interface'
 export class ProjectDescriptionComponent implements OnInit, OnDestroy {
     project: ProjectInterface;
     editMode: boolean;
-    editForm: FormGroup;
     subs: Subscription[] = [];
 
-    constructor(private fb: FormBuilder, public dataService: ProjectPageDataService) {}
+    constructor(public dataService: ProjectPageDataService, private topMenuService: TopMenuService) {}
 
     ngOnInit(): void {
         this.subs.push(
             this.dataService.project$.subscribe((project) => {
                 this.project = project;
-                this.initEditForm();
             })
         );
+
+        this.setEditAction();
     }
 
     ngOnDestroy() {
         this.subs.forEach((sub) => sub.unsubscribe());
-    }
-
-    private initEditForm(): void {
-        this.editForm = this.fb.group({
-            name: [this.project.name, [Validators.required]],
-            description: [this.project.description || '', [Validators.required]]
-        });
     }
 
     save(data: MainProjectDataInterface) {
@@ -45,5 +39,31 @@ export class ProjectDescriptionComponent implements OnInit, OnDestroy {
 
     cancel() {
         this.editMode = false;
+    }
+
+    private setEditAction(): void {
+        this.topMenuService.setActions([
+            {
+                icon: 'edit',
+                tooltip: 'Edit',
+                handler: () => {
+                    this.editMode = true;
+                    this.setEndEditAction();
+                }
+            }
+        ]);
+    }
+
+    private setEndEditAction(): void {
+        this.topMenuService.setActions([
+            {
+                icon: 'edit_off',
+                tooltip: 'End editing',
+                handler: () => {
+                    this.editMode = false;
+                    this.setEditAction();
+                }
+            }
+        ]);
     }
 }

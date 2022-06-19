@@ -5,9 +5,9 @@ import {HttpRequestState, httpRequestStates} from 'ngx-http-request-state';
 import {ProjectInterface} from '../../types/project.interface';
 import {ProjectsService} from '../../services/projects.service';
 import {UserService} from '../../../user/services/user.service';
-import {TopMenuActionInterface} from '../../../shared/components/top-menu/types';
 import {MatDialog} from '@angular/material/dialog';
 import {AddProjectDialogComponent} from '../add-project-dialog/add-project-dialog.component';
+import {TopMenuService} from '../../../shared/services/top-menu.service';
 
 @Component({
     selector: 'tm-projects-list',
@@ -18,19 +18,13 @@ export class ProjectsListComponent implements OnInit {
     projects$: Observable<ProjectInterface[]>;
     loading: boolean = false;
     error: string = null;
-    topMenuActions: TopMenuActionInterface[] = [
-        {
-            icon: 'add',
-            tooltip: 'Add a task',
-            handler: () => this.addProject()
-        }
-    ];
 
     constructor(
         private projectsService: ProjectsService,
         private userService: UserService,
         private router: Router,
-        private dialogOpener: MatDialog
+        private dialogOpener: MatDialog,
+        private topMenuService: TopMenuService
     ) {}
 
     ngOnInit(): void {
@@ -39,6 +33,16 @@ export class ProjectsListComponent implements OnInit {
             filter((requestState: HttpRequestState<ProjectInterface[]>) => !!requestState.value),
             map((requestState: HttpRequestState<ProjectInterface[]>) => requestState.value)
         );
+
+        this.topMenuService.setTitle('Projects');
+
+        this.topMenuService.setActions([
+            {
+                icon: 'add',
+                tooltip: 'Add a task',
+                handler: () => this.addProject()
+            }
+        ]);
     }
 
     goToProject(id: number) {

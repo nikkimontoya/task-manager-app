@@ -10,6 +10,7 @@ import {MatDialog} from '@angular/material/dialog';
 import {AddTaskDialogComponent} from '../add-task-dialog/add-task-dialog.component';
 import {RemoveTaskResultInterface} from '../../types/remove-task-result.interface';
 import {RemoveTaskConfirmationComponent} from '../remove-task-confirmation/remove-task-confirmation.component';
+import {TopMenuService} from '../../../shared/services/top-menu.service';
 
 @Component({
     selector: 'tm-task-list-page',
@@ -23,19 +24,13 @@ export class TaskListPageComponent implements OnInit, OnDestroy {
     showAddDialog = false;
     loading = false;
     error: string = null;
-    topMenuActions: TopMenuActionInterface[] = [
-        {
-            icon: 'add',
-            tooltip: 'Add a task',
-            handler: () => this.openTaskDialog(null)
-        }
-    ];
 
     constructor(
         private tasksService: TasksService,
         private confirmationService: ConfirmationService,
         private messagesService: MessagesService,
-        private dialogOpener: MatDialog
+        private dialogOpener: MatDialog,
+        private topMenuService: TopMenuService
     ) {}
 
     ngOnInit(): void {
@@ -49,6 +44,14 @@ export class TaskListPageComponent implements OnInit, OnDestroy {
             });
 
         this.subscriptions.push(sub);
+        this.topMenuService.setTitle('Tasks');
+        this.topMenuService.setActions([
+            {
+                icon: 'add',
+                tooltip: 'Add a task',
+                handler: () => this.openTaskDialog(null)
+            }
+        ]);
     }
 
     ngOnDestroy(): void {

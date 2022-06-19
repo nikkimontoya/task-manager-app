@@ -2,11 +2,6 @@
     <ng-container *ngIf="!editMode">
         <mat-card-title>
             {{ project.name }}
-            <div class="actions">
-                <button mat-icon-button (click)="editMode = true" title="Edit">
-                    <mat-icon>edit</mat-icon>
-                </button>
-            </div>
         </mat-card-title>
 
         <mat-card-content>{{ project.description }}</mat-card-content>

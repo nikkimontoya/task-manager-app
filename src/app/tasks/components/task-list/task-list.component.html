@@ -1,4 +1,4 @@
-<table class="task-table" mat-table [dataSource]="tasks">
+<table *ngIf="tasks.length" class="task-table" mat-table [dataSource]="tasks">
     <ng-container matColumnDef="title">
         <th mat-header-cell *matHeaderCellDef>Title</th>
         <td mat-cell *matCellDef="let task">
@@ -48,3 +48,5 @@
     <tr mat-header-row *matHeaderRowDef="columnsToDisplay"></tr>
     <tr mat-row *matRowDef="let myRowData; columns: columnsToDisplay"></tr>
 </table>
+
+<div *ngIf="!tasks.length" class="no-data-text">No data</div>
